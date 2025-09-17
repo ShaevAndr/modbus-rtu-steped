@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QSerialPort>
+#include <QTimer>
 #include "settings.h"
 
 class IRxTx : public QObject
@@ -21,8 +22,11 @@ signals:
 
 private slots:
     void onReadyRead();
+    void onFrameTimeout();
     void onError(QSerialPort::SerialPortError error);
 
 private:
     QSerialPort *port;
+    QTimer frameTimer;
+    QByteArray buffer;
 };
