@@ -10,6 +10,7 @@
 #include "../../mainwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QVector>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -22,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[9];
-    char stringdata0[88];
+    QByteArrayData data[10];
+    char stringdata0[113];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,15 +38,17 @@ QT_MOC_LITERAL(1, 11, 12), // "refreshPorts"
 QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 16), // "onConnectClicked"
 QT_MOC_LITERAL(4, 42, 13), // "onSendClicked"
-QT_MOC_LITERAL(5, 56, 14), // "onDataReceived"
-QT_MOC_LITERAL(6, 71, 4), // "data"
-QT_MOC_LITERAL(7, 76, 7), // "onError"
-QT_MOC_LITERAL(8, 84, 3) // "err"
+QT_MOC_LITERAL(5, 56, 13), // "onJobFinished"
+QT_MOC_LITERAL(6, 70, 17), // "QVector<Response>"
+QT_MOC_LITERAL(7, 88, 9), // "responses"
+QT_MOC_LITERAL(8, 98, 10), // "onJobError"
+QT_MOC_LITERAL(9, 109, 3) // "err"
 
     },
     "MainWindow\0refreshPorts\0\0onConnectClicked\0"
-    "onSendClicked\0onDataReceived\0data\0"
-    "onError\0err"
+    "onSendClicked\0onJobFinished\0"
+    "QVector<Response>\0responses\0onJobError\0"
+    "err"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,14 +70,14 @@ static const uint qt_meta_data_MainWindow[] = {
        3,    0,   40,    2, 0x08 /* Private */,
        4,    0,   41,    2, 0x08 /* Private */,
        5,    1,   42,    2, 0x08 /* Private */,
-       7,    1,   45,    2, 0x08 /* Private */,
+       8,    1,   45,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QByteArray,    6,
-    QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void, 0x80000000 | 6,    7,
+    QMetaType::Void, QMetaType::QString,    9,
 
        0        // eod
 };
@@ -88,8 +91,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->refreshPorts(); break;
         case 1: _t->onConnectClicked(); break;
         case 2: _t->onSendClicked(); break;
-        case 3: _t->onDataReceived((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
-        case 4: _t->onError((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 3: _t->onJobFinished((*reinterpret_cast< const QVector<Response>(*)>(_a[1]))); break;
+        case 4: _t->onJobError((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     }

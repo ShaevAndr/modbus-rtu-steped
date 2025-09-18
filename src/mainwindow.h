@@ -6,8 +6,13 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QLabel>
-#include "irxtx.h"
 #include "settings.h"
+
+// Forward declarations
+class Transport;
+class IProtocol;
+class Master;
+struct Response;
 
 class MainWindow : public QMainWindow
 {
@@ -20,8 +25,8 @@ private slots:
     void refreshPorts();
     void onConnectClicked();
     void onSendClicked();
-    void onDataReceived(const QByteArray &data);
-    void onError(const QString &err);
+    void onJobFinished(const QVector<Response> &responses);
+    void onJobError(const QString &err);
 
 private:
     void setupUi();
@@ -45,6 +50,8 @@ private:
     QTextEdit *logEdit;
 
     // backend
-    IRxTx *io;
+    Transport* m_transport;
+    IProtocol* m_protocol;
+    Master* m_master;
     SerialSettings settings;
 };

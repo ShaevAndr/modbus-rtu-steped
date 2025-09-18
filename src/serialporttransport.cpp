@@ -1,19 +1,19 @@
-#include "irxtx.h"
+#include "serialporttransport.h"
 #include <QTimer>
 #include <QDebug>
 
-IRxTx::IRxTx(QObject *parent) : QObject(parent), port(new QSerialPort(this))
+SerialPortTransport::SerialPortTransport(QObject *parent) : Transport(parent), port(new QSerialPort(this))
 {
-    connect(port, &QSerialPort::readyRead, this, &IRxTx::onReadyRead);
-    connect(port, &QSerialPort::errorOccurred, this, &IRxTx::onError);
+    connect(port, &QSerialPort::readyRead, this, &SerialPortTransport::onReadyRead);
+    connect(port, &QSerialPort::errorOccurred, this, &SerialPortTransport::onError);
 }
 
-IRxTx::~IRxTx()
+SerialPortTransport::~SerialPortTransport()
 {
     close();
 }
 
-bool IRxTx::open(const SerialSettings &settings)
+bool SerialPortTransport::open(const SerialSettings &settings)
 {
     if (port->isOpen()) port->close();
     port->setPortName(settings.portName);
@@ -28,22 +28,22 @@ bool IRxTx::open(const SerialSettings &settings)
         return false;
     }
 
-    connect(port, &QSerialPort::readyRead, this, &IRxTx::onReadyRead);
-    connect(&frameTimer, &QTimer::timeout, this, &IRxTx::onFrameTimeout);
+    connect(port, &QSerialPort::readyRead, this, &SerialPortTransport::onReadyRead);
+    connect(&frameTimer, &QTimer::timeout, this, &SerialPortTransport::onFrameTimeout);
     return true;
 }
 
-void IRxTx::close()
+void SerialPortTransport::close()
 {
     if (port->isOpen()) port->close();
 }
 
-bool IRxTx::isOpen() const
+bool SerialPortTransport::isOpen() const
 {
     return port->isOpen();
 }
 
-void IRxTx::send(const QByteArray &data)
+void SerialPortTransport::send(const QByteArray &data)
 {
     if (!port->isOpen()) {
         emit errorOccurred("Port is not open");
@@ -56,26 +56,19 @@ void IRxTx::send(const QByteArray &data)
     port->flush();
 }
 
-void IRxTx::onReadyRead()
+void SerialPortTransport::onReadyRead()
 {
     buffer.append(port->readAll());
     // каждый раз сбрасываем таймер при новых данных
     frameTimer.start(5); // 5 ms > 3.5 символа при 9600 бод
 }
 
-void IRxTx::onFrameTimeout() {
-    qDebug() << "Кадр принят:" << buffer.toHex(' ');
-
-    // TODO: здесь должна быть проверка CRC и разбор ответа
-    if (buffer.size() >= 5) {
-        qDebug() << "Адрес:" << static_cast<unsigned char>(buffer[0])
-                 << "Функция:" << static_cast<unsigned char>(buffer[1]);
-    }
-
+void SerialPortTransport::onFrameTimeout() {
+    emit dataReceived(buffer);
     buffer.clear();
 }
 
-void IRxTx::onError(QSerialPort::SerialPortError error)
+void SerialPortTransport::onError(QSerialPort::SerialPortError error)
 {
     if (error != QSerialPort::NoError)
         emit errorOccurred(port->errorString());

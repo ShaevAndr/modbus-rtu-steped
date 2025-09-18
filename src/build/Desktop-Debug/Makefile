@@ -54,17 +54,25 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../../main.cpp \
 		../../mainwindow.cpp \
-		../../irxtx.cpp \
+		../../serialporttransport.cpp \
 		../../modbuscrc.cpp \
-		../../settings.cpp moc_mainwindow.cpp \
-		moc_irxtx.cpp
+		../../modbusrtuprotocol.cpp \
+		../../settings.cpp \
+		../../master.cpp moc_mainwindow.cpp \
+		moc_transport.cpp \
+		moc_serialporttransport.cpp \
+		moc_master.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		irxtx.o \
+		serialporttransport.o \
 		modbuscrc.o \
+		modbusrtuprotocol.o \
 		settings.o \
+		master.o \
 		moc_mainwindow.o \
-		moc_irxtx.o
+		moc_transport.o \
+		moc_serialporttransport.o \
+		moc_master.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -130,6 +138,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		../../.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -150,14 +159,22 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../../../../stepedRtuDevelop.pro ../../mainwindow.h \
-		../../irxtx.h \
+		../../../../stepedRtuDevelop.pro ../../IProtocol.h \
+		../../command.h \
+		../../mainwindow.h \
+		../../transport.h \
+		../../serialporttransport.h \
+		../../master.h \
 		../../modbuscrc.h \
+		../../modbusrtuprotocol.h \
+		../../errorcodes.h \
 		../../settings.h ../../main.cpp \
 		../../mainwindow.cpp \
-		../../irxtx.cpp \
+		../../serialporttransport.cpp \
 		../../modbuscrc.cpp \
-		../../settings.cpp
+		../../modbusrtuprotocol.cpp \
+		../../settings.cpp \
+		../../master.cpp
 QMAKE_TARGET  = stepedRtuDevelop
 DESTDIR       = 
 TARGET        = stepedRtuDevelop
@@ -234,6 +251,7 @@ Makefile: ../../stepedRtuDevelop.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -321,6 +339,7 @@ Makefile: ../../stepedRtuDevelop.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -357,8 +376,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../mainwindow.h ../../irxtx.h ../../modbuscrc.h ../../settings.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../main.cpp ../../mainwindow.cpp ../../irxtx.cpp ../../modbuscrc.cpp ../../settings.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../IProtocol.h ../../command.h ../../mainwindow.h ../../transport.h ../../serialporttransport.h ../../master.h ../../modbuscrc.h ../../modbusrtuprotocol.h ../../errorcodes.h ../../settings.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../main.cpp ../../mainwindow.cpp ../../serialporttransport.cpp ../../modbuscrc.cpp ../../modbusrtuprotocol.cpp ../../settings.cpp ../../master.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -390,21 +409,37 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_irxtx.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_transport.cpp moc_serialporttransport.cpp moc_master.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_irxtx.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_transport.cpp moc_serialporttransport.cpp moc_master.cpp
 moc_mainwindow.cpp: ../../mainwindow.h \
-		../../irxtx.h \
 		../../settings.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../mainwindow.h -o moc_mainwindow.cpp
 
-moc_irxtx.cpp: ../../irxtx.h \
+moc_transport.cpp: ../../transport.h \
 		../../settings.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../irxtx.h -o moc_irxtx.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../transport.h -o moc_transport.cpp
+
+moc_serialporttransport.cpp: ../../serialporttransport.h \
+		../../transport.h \
+		../../settings.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../serialporttransport.h -o moc_serialporttransport.cpp
+
+moc_master.cpp: ../../master.h \
+		../../transport.h \
+		../../settings.h \
+		../../IProtocol.h \
+		../../command.h \
+		../../errorcodes.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/andrew/projects/steped_modbus_rtu/modbus-rtu-steped/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../master.h -o moc_master.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -423,31 +458,57 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 ####### Compile
 
 main.o: ../../main.cpp ../../mainwindow.h \
-		../../irxtx.h \
 		../../settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../main.cpp
 
 mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
-		../../irxtx.h \
 		../../settings.h \
-		../../modbuscrc.h
+		../../serialporttransport.h \
+		../../transport.h \
+		../../modbusrtuprotocol.h \
+		../../IProtocol.h \
+		../../command.h \
+		../../errorcodes.h \
+		../../master.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../mainwindow.cpp
 
-irxtx.o: ../../irxtx.cpp ../../irxtx.h \
+serialporttransport.o: ../../serialporttransport.cpp ../../serialporttransport.h \
+		../../transport.h \
 		../../settings.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o irxtx.o ../../irxtx.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o serialporttransport.o ../../serialporttransport.cpp
 
 modbuscrc.o: ../../modbuscrc.cpp ../../modbuscrc.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o modbuscrc.o ../../modbuscrc.cpp
 
+modbusrtuprotocol.o: ../../modbusrtuprotocol.cpp ../../modbusrtuprotocol.h \
+		../../IProtocol.h \
+		../../command.h \
+		../../errorcodes.h \
+		../../modbuscrc.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o modbusrtuprotocol.o ../../modbusrtuprotocol.cpp
+
 settings.o: ../../settings.cpp ../../settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settings.o ../../settings.cpp
+
+master.o: ../../master.cpp ../../master.h \
+		../../transport.h \
+		../../settings.h \
+		../../IProtocol.h \
+		../../command.h \
+		../../errorcodes.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o master.o ../../master.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
-moc_irxtx.o: moc_irxtx.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_irxtx.o moc_irxtx.cpp
+moc_transport.o: moc_transport.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_transport.o moc_transport.cpp
+
+moc_serialporttransport.o: moc_serialporttransport.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_serialporttransport.o moc_serialporttransport.cpp
+
+moc_master.o: moc_master.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_master.o moc_master.cpp
 
 ####### Install
 

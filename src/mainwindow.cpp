@@ -5,25 +5,36 @@
 #include <QSerialPortInfo>
 #include <QMessageBox>
 #include <QRegExp>
-#include "modbuscrc.h"
+
+#include "serialporttransport.h"
+#include "modbusrtuprotocol.h"
+#include "master.h"
+#include "command.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), io(new IRxTx(this))
+    : QMainWindow(parent)
 {
     setupUi();
+
+    // Инициализация бэкенда
+    m_transport = new SerialPortTransport(this);
+    m_protocol = new ModbusRtuProtocol(); // Не QObject, родитель не нужен
+    m_master = new Master(m_transport, m_protocol, this);
 
     connect(refreshButton, &QPushButton::clicked, this, &MainWindow::refreshPorts);
     connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
     connect(sendButton, &QPushButton::clicked, this, &MainWindow::onSendClicked);
 
-    connect(io, &IRxTx::dataReceived, this, &MainWindow::onDataReceived);
-    connect(io, &IRxTx::errorOccurred, this, &MainWindow::onError);
+    // Соединяем сигналы от Master со слотами GUI
+    connect(m_master, &Master::jobFinished, this, &MainWindow::onJobFinished);
+    connect(m_master, &Master::jobError, this, &MainWindow::onJobError);
 
     refreshPorts();
 }
 
 MainWindow::~MainWindow()
 {
+    delete m_protocol; // Удаляем, т.к. у него нет родителя
 }
 
 void MainWindow::setupUi()
@@ -51,8 +62,8 @@ void MainWindow::setupUi()
     // Fill combos
     baudCombo->addItems({"9600","19200","38400","57600","115200"});
     parityCombo->addItems({"None","Even","Odd"});
-    dataBitsCombo->addItems({"5","6","7","8"});
-    stopBitsCombo->addItems({"1","1.5","2"});
+    dataBitsCombo->addItems({"8","7","6","5"});
+    stopBitsCombo->addItems({"1","2"}); // 1.5 не поддерживается QSerialPort
 
     QFormLayout *form = new QFormLayout;
     QHBoxLayout *portRow = new QHBoxLayout;
@@ -82,7 +93,7 @@ void MainWindow::setupUi()
     mainLay->addWidget(logEdit);
 
     central->setLayout(mainLay);
-    setWindowTitle("Modbus RTU - Qt Example");
+    setWindowTitle("Modbus RTU Master");
 }
 
 void MainWindow::refreshPorts()
@@ -96,8 +107,8 @@ void MainWindow::refreshPorts()
 
 void MainWindow::onConnectClicked()
 {
-    if (io->isOpen()) {
-        io->close();
+    if (m_transport->isOpen()) {
+        m_transport->close();
         updateUiConnected(false);
         logEdit->append("Disconnected");
         return;
@@ -109,7 +120,7 @@ void MainWindow::onConnectClicked()
     settings.dataBits = static_cast<QSerialPort::DataBits>(dataBitsCombo->currentText().toInt());
     settings.stopBits = (stopBitsCombo->currentText() == "1") ? QSerialPort::OneStop : QSerialPort::TwoStop;
 
-    bool ok = io->open(settings);
+    bool ok = m_transport->open(settings);
     if (!ok) {
         QMessageBox::critical(this, "Error", "Failed to open port");
         logEdit->append("Failed to open port");
@@ -122,6 +133,12 @@ void MainWindow::onConnectClicked()
 void MainWindow::updateUiConnected(bool connected)
 {
     connectButton->setText(connected ? "Disconnect" : "Connect");
+    portCombo->setEnabled(!connected);
+    baudCombo->setEnabled(!connected);
+    parityCombo->setEnabled(!connected);
+    dataBitsCombo->setEnabled(!connected);
+    stopBitsCombo->setEnabled(!connected);
+    refreshButton->setEnabled(!connected);
 }
 
 static QByteArray hexStringToBytes(const QString &s)
@@ -138,39 +155,43 @@ static QByteArray hexStringToBytes(const QString &s)
 
 void MainWindow::onSendClicked()
 {
-    if (!io->isOpen()) {
+    if (!m_transport->isOpen()) {
         QMessageBox::warning(this, "Not connected", "Open serial port first");
         return;
     }
 
     bool ok;
     int addr = addrEdit->text().toInt(&ok);
-    if (!ok) { QMessageBox::warning(this, "Input error", "Invalid address"); return; }
+    if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid address"); return; }
     int func = funcEdit->text().toInt(&ok);
-    if (!ok) { QMessageBox::warning(this, "Input error", "Invalid function"); return; }
+    if (!ok || func < 0 || func > 255) { QMessageBox::warning(this, "Input error", "Invalid function"); return; }
 
     QByteArray data = hexStringToBytes(dataEdit->text());
+
+    // Создаем команду и задание
+    Command cmd(addr, func, data);
+    QVector<Command> job;
+    job.append(cmd);
+
+    // Отправляем задание в Master
+    m_master->enqueueJob(job);
+
+    // Отображаем, что мы отправили (без CRC, т.к. его добавит протокол)
     QByteArray frame;
-    frame.append(static_cast<char>(addr & 0xFF));
-    frame.append(static_cast<char>(func & 0xFF));
-    frame.append(data);
-
-    quint16 crc = ModbusCRC::calculate(reinterpret_cast<const unsigned char*>(frame.constData()), frame.size());
-    frame.append(static_cast<char>(crc & 0xFF));
-    frame.append(static_cast<char>((crc >> 8) & 0xFF));
-
-    crcLabel->setText(QString("CRC: 0x%1").arg(QString::number(crc, 16).toUpper()));
-
-    io->send(frame);
-    logEdit->append(QString("Sent: %1").arg(QString(frame.toHex(' ').toUpper())));
+    frame.append(cmd.deviceAddress);
+    frame.append(cmd.functionCode);
+    frame.append(cmd.data);
+    logEdit->append(QString("Sent job with 1 command: %1").arg(QString(frame.toHex(' ').toUpper())));
 }
 
-void MainWindow::onDataReceived(const QByteArray &data)
+void MainWindow::onJobFinished(const QVector<Response> &responses)
 {
-    logEdit->append(QString("Received: %1").arg(QString(data.toHex(' ').toUpper())));
+    for(const Response& resp : responses) {
+        logEdit->append(QString("Received: %1").arg(QString(resp.data.toHex(' ').toUpper())));
+    }
 }
 
-void MainWindow::onError(const QString &err)
+void MainWindow::onJobError(const QString &err)
 {
-    logEdit->append(QString("Error: %1").arg(err));
+    logEdit->append(QString("<font color='red'>Error: %1</font>").arg(err));
 }

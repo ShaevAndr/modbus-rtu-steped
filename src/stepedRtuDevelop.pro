@@ -5,19 +5,20 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    irxtx.cpp \
-    modbuscommand.cpp \
+    serialporttransport.cpp \
     modbuscrc.cpp \
     modbusrtuprotocol.cpp \
     settings.cpp \
+    master.cpp
 
 HEADERS += \
     IProtocol.h \
     command.h \
     mainwindow.h \
-    irxtx.h \
+    transport.h \
+    serialporttransport.h \
     master.h \
-    modbuscommand.h \
     modbuscrc.h \
     modbusrtuprotocol.h \
+    errorcodes.h \
     settings.h \
