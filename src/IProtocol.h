@@ -25,6 +25,11 @@ public:
 
     // Декодирует байтовый массив в структуру ответа
     virtual Response decode(const QByteArray &frame) = 0;
+
+    virtual Command parameterI(int ecode, int index, int value) = 0;
+    virtual Command parameterF(int ecode, int index, float value) = 0;
+    virtual Command parametersI(int ecode, QVector<int> values) = 0;
+    virtual Command parametersF(int ecode, QVector<float> values) = 0;
 };
 
 #endif // IPROTOCOL_H

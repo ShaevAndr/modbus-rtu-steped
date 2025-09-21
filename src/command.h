@@ -10,10 +10,17 @@ struct Command
         Main     // Основная команда для чтения/записи данных
     };
 
+    enum DataType {
+        Float,
+        Int
+    };
+
     CommandType type = Main;
+    QByteArray frame;
     quint8 deviceAddress;
     quint8 functionCode;
     QByteArray data;
+
 
     // Можно добавить конструкторы для удобства
     Command(quint8 addr, quint8 func, const QByteArray &d = QByteArray(), CommandType t = Main)

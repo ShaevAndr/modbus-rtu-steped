@@ -1,5 +1,6 @@
 #include "modbusrtuprotocol.h"
 #include "modbuscrc.h"
+#include <QDataStream>
 
 ModbusRtuProtocol::ModbusRtuProtocol()
 {
@@ -54,3 +55,13 @@ Response ModbusRtuProtocol::decode(const QByteArray &frame)
 
     return response;
 }
+
+Command ModbusRtuProtocol::parameterI(int ecode, int index, int value) {
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setByteOrder(QDataStream::BigEndian); // Modbus использует Big Endian
+
+    stream << static_cast<quint16>(index);
+    stream << static_cast<quint16>(value);
+    return Command(1, ModbusFunction::READ_HOLDING_REGS, data);
+};
