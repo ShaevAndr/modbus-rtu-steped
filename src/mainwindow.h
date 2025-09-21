@@ -42,6 +42,7 @@ private:
     QPushButton *connectButton;
 
     QLineEdit *addrEdit;
+    QLineEdit *startRegistrEdit;
     QLineEdit *funcEdit;
     QLineEdit *dataEdit;
     QLabel *crcLabel;

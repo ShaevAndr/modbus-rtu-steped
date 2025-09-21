@@ -53,6 +53,7 @@ void MainWindow::setupUi()
 
     addrEdit = new QLineEdit; addrEdit->setPlaceholderText("slave addr (e.g. 1)");
     funcEdit = new QLineEdit; funcEdit->setPlaceholderText("function (e.g. 3)");
+    startRegistrEdit = new QLineEdit; startRegistrEdit->setPlaceholderText("registr bytes hex (e.g. 00 10 00 02)");
     dataEdit = new QLineEdit; dataEdit->setPlaceholderText("data bytes hex (e.g. 00 10 00 02)");
     crcLabel = new QLabel("CRC: --");
     sendButton = new QPushButton("Send");
@@ -82,7 +83,9 @@ void MainWindow::setupUi()
     QHBoxLayout *cmdRow = new QHBoxLayout;
     cmdRow->addWidget(addrEdit);
     cmdRow->addWidget(funcEdit);
+    cmdRow->addWidget(startRegistrEdit);
     cmdRow->addWidget(dataEdit);
+
     cmdRow->addWidget(crcLabel);
     cmdRow->addWidget(sendButton);
 
@@ -166,22 +169,28 @@ void MainWindow::onSendClicked()
     int func = funcEdit->text().toInt(&ok);
     if (!ok || func < 0 || func > 255) { QMessageBox::warning(this, "Input error", "Invalid function"); return; }
 
-    QByteArray data = hexStringToBytes(dataEdit->text());
+    int registr = startRegistrEdit->text().toInt(&ok);
+    if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
+
+    int data = dataEdit->text().toInt(&ok);
+    if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
 
     // Создаем команду и задание
-    Command cmd(addr, func, data);
-    QVector<Command> job;
-    job.append(cmd);
+    // Command cmd = m_protocol->parameterI(1, registr, data);
+    // QVector<Command> job;
+    // job.append(cmd);
 
     // Отправляем задание в Master
-    m_master->enqueueJob(job);
+    // m_master->enqueueJob(job);
 
     // Отображаем, что мы отправили (без CRC, т.к. его добавит протокол)
-    QByteArray frame;
-    frame.append(cmd.deviceAddress);
-    frame.append(cmd.functionCode);
-    frame.append(cmd.data);
-    logEdit->append(QString("Sent job with 1 command: %1").arg(QString(frame.toHex(' ').toUpper())));
+    // QByteArray frame;
+    // frame.append(cmd.deviceAddress);
+    // frame.append(cmd.functionCode);
+    // frame.append(cmd.data);
+    // logEdit->append(QString("Sent job with 1 command: %1").arg(QString(frame.toHex(' ').toUpper())));
+    // logEdit->append(cmd.frame);
+    return;
 }
 
 void MainWindow::onJobFinished(const QVector<Response> &responses)

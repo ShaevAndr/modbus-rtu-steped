@@ -62,6 +62,18 @@ Command ModbusRtuProtocol::parameterI(int ecode, int index, int value) {
     stream.setByteOrder(QDataStream::BigEndian); // Modbus использует Big Endian
 
     stream << static_cast<quint16>(index);
-    stream << static_cast<quint16>(value);
+    stream << static_cast<quint16>(1);
     return Command(1, ModbusFunction::READ_HOLDING_REGS, data);
+};
+
+Command ModbusRtuProtocol::parameterF(int ecode, int index, float value) {
+return Command(1, ModbusFunction::READ_HOLDING_REGS, {32, 32});
+};
+
+Command ModbusRtuProtocol::parametersI(int ecode, QVector<int> values) {
+    return Command(1, ModbusFunction::READ_HOLDING_REGS, {32, 32});
+};
+
+Command ModbusRtuProtocol::parametersF(int ecode, QVector<float> values) {
+return Command(1, ModbusFunction::READ_HOLDING_REGS, {32, 32});
 };
