@@ -1,0 +1,75 @@
+{
+  "Device": "Термодат-16Е3",
+  "Version": "1.0",
+  "Enums": [
+    {
+      "ID": "EnumMode",
+      "Name": "Режим работы",
+      "Values": [
+        { "Value": 0, "Name": "Автоматический" },
+        { "Value": 1, "Name": "Ручной" },
+        { "Value": 2, "Name": "Калибровка" }
+      ]
+    }
+  ],
+  "Params": [
+    {
+      "ID": "ParamSetpoint",
+      "Name": "Уставка температуры",
+      "FormatStr": "%.1f",
+      "Min": -50.0,
+      "Max": 150.0,
+      "Unit": "°C",
+      "Desc": "Желаемая температура"
+    },
+    {
+      "ID": "ParamHysteresis",
+      "Name": "Гистерезис",
+      "FormatStr": "%.1f",
+      "Min": 0.1,
+      "Max": 20.0,
+      "Unit": "°C",
+      "Desc": "Зона нечувствительности"
+    }
+  ],
+  "Tables": [
+    {
+      "ID": "InputRegisters",
+      "Name": "Входные регистры",
+      "Registers": [
+        { "Addr": 0, "ID": "RegTemperature1", "Name": "Температура датчика 1", "FormatStr": "%.1f", "Unit": "°C" },
+        { "Addr": 1, "ID": "RegTemperature2", "Name": "Температура датчика 2", "FormatStr": "%.1f", "Unit": "°C" },
+        { "Addr": 2, "ID": "RegTemperature3", "Name": "Температура датчика 3", "FormatStr": "%.1f", "Unit": "°C" },
+        { "Addr": 3, "ID": "RegOutputValue", "Name": "Выходное значение", "FormatStr": "%d", "Unit": "%" },
+        { "Addr": 4, "ID": "RegMode", "Name": "Режим работы", "FormatStr": "%d", "EnumID": "EnumMode" },
+        { "Addr": 5, "ID": "RegStatus", "Name": "Статус устройства", "FormatStr": "%d" }
+      ]
+    },
+    {
+      "ID": "HoldingRegisters",
+      "Name": "Холдинговые регистры",
+      "Registers": [
+        { "Addr": 0, "ID": "HoldSetpoint", "Name": "Уставка температуры", "FormatStr": "%.1f", "Unit": "°C" },
+        { "Addr": 1, "ID": "HoldHysteresis", "Name": "Гистерезис", "FormatStr": "%.1f", "Unit": "°C" },
+        { "Addr": 2, "ID": "HoldKp", "Name": "Коэффициент P", "FormatStr": "%.2f" },
+        { "Addr": 3, "ID": "HoldKi", "Name": "Коэффициент I", "FormatStr": "%.2f" },
+        { "Addr": 4, "ID": "HoldKd", "Name": "Коэффициент D", "FormatStr": "%.2f" },
+        { "Addr": 5, "ID": "HoldOutLimitMin", "Name": "Минимум выхода", "FormatStr": "%d", "Unit": "%" },
+        { "Addr": 6, "ID": "HoldOutLimitMax", "Name": "Максимум выхода", "FormatStr": "%d", "Unit": "%" }
+      ]
+    },
+    {
+      "ID": "Coils",
+      "Name": "Коилы (дискретные выходы/флаги)",
+      "Registers": [
+        { "Addr": 0, "ID": "CoilOutputEnable", "Name": "Включение выхода", "FormatStr": "%d" },
+        { "Addr": 1, "ID": "CoilAlarmOverheat", "Name": "Авария перегрев", "FormatStr": "%d" },
+        { "Addr": 2, "ID": "CoilAlarmSensorError", "Name": "Авария датчика", "FormatStr": "%d" },
+        { "Addr": 3, "ID": "CoilManualMode", "Name": "Принудительный ручной режим", "FormatStr": "%d" },
+        { "Addr": 4, "ID": "CoilLockKeyboard", "Name": "Блокировка клавиатуры", "FormatStr": "%d" }
+      ]
+    }
+  ],
+  "Telemetries": [],
+  "Flashes": []
+}
