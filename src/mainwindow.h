@@ -24,7 +24,7 @@ public:
 private slots:
     void refreshPorts();
     void onConnectClicked();
-    void onSendClicked();
+    void onGetInt();
     void onJobFinished(const QVector<Response> &responses);
     void onJobError(const QString &err);
 
@@ -44,9 +44,18 @@ private:
     QLineEdit *addrEdit;
     QLineEdit *startRegistrEdit;
     QLineEdit *funcEdit;
+
     QLineEdit *dataEdit;
     QLabel *crcLabel;
-    QPushButton *sendButton;
+    QPushButton *getIntButton;
+    QPushButton *getIntsButton;
+    QPushButton *getFloatButton;
+    QPushButton *getFloatsButton;
+    QPushButton *setIntButton;
+    QPushButton *setIntsButton;
+    QPushButton *setFloatButton;
+    QPushButton *setFloatsButton;
+
 
     QTextEdit *logEdit;
 

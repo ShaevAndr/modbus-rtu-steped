@@ -5,6 +5,7 @@
 #include <QSerialPortInfo>
 #include <QMessageBox>
 #include <QRegExp>
+#include <QDebug>
 
 #include "serialporttransport.h"
 #include "modbusrtuprotocol.h"
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(refreshButton, &QPushButton::clicked, this, &MainWindow::refreshPorts);
     connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
-    connect(sendButton, &QPushButton::clicked, this, &MainWindow::onSendClicked);
+    connect(getIntButton, &QPushButton::clicked, this, &MainWindow::onGetInt);
 
     // Соединяем сигналы от Master со слотами GUI
     connect(m_master, &Master::jobFinished, this, &MainWindow::onJobFinished);
@@ -52,11 +53,17 @@ void MainWindow::setupUi()
     connectButton = new QPushButton("Connect");
 
     addrEdit = new QLineEdit; addrEdit->setPlaceholderText("slave addr (e.g. 1)");
-    funcEdit = new QLineEdit; funcEdit->setPlaceholderText("function (e.g. 3)");
     startRegistrEdit = new QLineEdit; startRegistrEdit->setPlaceholderText("registr bytes hex (e.g. 00 10 00 02)");
     dataEdit = new QLineEdit; dataEdit->setPlaceholderText("data bytes hex (e.g. 00 10 00 02)");
     crcLabel = new QLabel("CRC: --");
-    sendButton = new QPushButton("Send");
+    getIntButton = new QPushButton("getInt");
+    getIntsButton = new QPushButton("getInts");
+    getFloatButton = new QPushButton("getFloat");
+    getFloatsButton = new QPushButton("getFloats");
+    setIntButton = new QPushButton("getInt");
+    setIntsButton = new QPushButton("getInts");
+    setFloatButton = new QPushButton("getFloat");
+    setFloatsButton = new QPushButton("getFloats");
 
     logEdit = new QTextEdit; logEdit->setReadOnly(true);
 
@@ -82,12 +89,18 @@ void MainWindow::setupUi()
 
     QHBoxLayout *cmdRow = new QHBoxLayout;
     cmdRow->addWidget(addrEdit);
-    cmdRow->addWidget(funcEdit);
     cmdRow->addWidget(startRegistrEdit);
     cmdRow->addWidget(dataEdit);
 
     cmdRow->addWidget(crcLabel);
-    cmdRow->addWidget(sendButton);
+    cmdRow->addWidget(getIntButton);
+    cmdRow->addWidget(getFloatButton);
+    cmdRow->addWidget(getIntsButton);
+    cmdRow->addWidget(getFloatsButton);
+    cmdRow->addWidget(setIntButton);
+    cmdRow->addWidget(setFloatButton);
+    cmdRow->addWidget(setIntsButton);
+    cmdRow->addWidget(setFloatsButton);
 
     QVBoxLayout *mainLay = new QVBoxLayout;
     mainLay->addLayout(form);
@@ -156,18 +169,16 @@ static QByteArray hexStringToBytes(const QString &s)
     return out;
 }
 
-void MainWindow::onSendClicked()
+void MainWindow::onGetInt()
 {
-    if (!m_transport->isOpen()) {
-        QMessageBox::warning(this, "Not connected", "Open serial port first");
-        return;
-    }
+//    if (!m_transport->isOpen()) {
+//        QMessageBox::warning(this, "Not connected", "Open serial port first");
+//        return;
+//    }
 
     bool ok;
     int addr = addrEdit->text().toInt(&ok);
     if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid address"); return; }
-    int func = funcEdit->text().toInt(&ok);
-    if (!ok || func < 0 || func > 255) { QMessageBox::warning(this, "Input error", "Invalid function"); return; }
 
     int registr = startRegistrEdit->text().toInt(&ok);
     if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
@@ -176,7 +187,13 @@ void MainWindow::onSendClicked()
     if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
 
     // Создаем команду и задание
-    // Command cmd = m_protocol->parameterI(1, registr, data);
+    QVector<Command> commands = m_protocol->setParameterI(addr, registr, data);
+    for (Command& cmd: commands) {
+            qDebug() << cmd.deviceAddress << "-" << cmd.functionCode << "-" << cmd.data;
+            qDebug() << cmd.frame.toHex();
+            cmd.frame =  m_protocol->encode(cmd);
+    }
+
     // QVector<Command> job;
     // job.append(cmd);
 
@@ -189,7 +206,10 @@ void MainWindow::onSendClicked()
     // frame.append(cmd.functionCode);
     // frame.append(cmd.data);
     // logEdit->append(QString("Sent job with 1 command: %1").arg(QString(frame.toHex(' ').toUpper())));
-    // logEdit->append(cmd.frame);
+    for (const Command& cmd: commands) {
+         qDebug()<<cmd.frame.toHex();
+         logEdit->append(cmd.frame);
+    }
     return;
 }
 

@@ -7,11 +7,15 @@ ModbusRtuProtocol::ModbusRtuProtocol()
 
 }
 
+static constexpr int MAX_REGS_PER_FRAME = 120;
+
 QByteArray ModbusRtuProtocol::encode(const Command &cmd)
 {
     QByteArray frame;
     frame.append(cmd.deviceAddress);
+    qDebug() << "address" << frame.toHex();
     frame.append(cmd.functionCode);
+    qDebug() << frame.toHex();
     frame.append(cmd.data);
 
     quint16 crc = ModbusCRC::calculate(reinterpret_cast<const unsigned char*>(frame.constData()), frame.size());
@@ -56,24 +60,167 @@ Response ModbusRtuProtocol::decode(const QByteArray &frame)
     return response;
 }
 
-Command ModbusRtuProtocol::parameterI(int ecode, int index, int value) {
+QVector<Command> ModbusRtuProtocol::setParameterI(quint8 deviceAddr, quint16 index, quint16 value) {
     QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-    stream.setByteOrder(QDataStream::BigEndian); // Modbus использует Big Endian
+    QDataStream s(&data, QIODevice::WriteOnly);
+    s.setByteOrder(QDataStream::BigEndian);
 
-    stream << static_cast<quint16>(index);
-    stream << static_cast<quint16>(1);
-    return Command(1, ModbusFunction::READ_HOLDING_REGS, data);
-};
+    s << index;
+    s << value;
 
-Command ModbusRtuProtocol::parameterF(int ecode, int index, float value) {
-return Command(1, ModbusFunction::READ_HOLDING_REGS, {32, 32});
-};
+    return { Command(deviceAddr, WRITE_SINGLE_REG, data) };
+}
 
-Command ModbusRtuProtocol::parametersI(int ecode, QVector<int> values) {
-    return Command(1, ModbusFunction::READ_HOLDING_REGS, {32, 32});
-};
+// Один float (2 регистра)
+QVector<Command> ModbusRtuProtocol::setParameterF(quint8 deviceAddr, quint16 index, float value) {
+    QByteArray data;
+    QDataStream s(&data, QIODevice::WriteOnly);
+    s.setByteOrder(QDataStream::BigEndian);
 
-Command ModbusRtuProtocol::parametersF(int ecode, QVector<float> values) {
-return Command(1, ModbusFunction::READ_HOLDING_REGS, {32, 32});
-};
+    quint32 raw;
+    memcpy(&raw, &value, sizeof(float));
+
+    quint16 high = static_cast<quint16>((raw >> 16) & 0xFFFF);
+    quint16 low  = static_cast<quint16>(raw & 0xFFFF);
+
+    s << index;           // адрес
+    s << quint16(2);      // количество регистров
+    s << quint8(4);       // количество байт
+    s << high;
+    s << low;
+
+    return { Command(deviceAddr, WRITE_MULTIPLE_REGS, data) };
+}
+
+// Несколько int
+QVector<Command> ModbusRtuProtocol::setParametersI(quint8 deviceAddr, quint16 index, QVector<quint16> values) {
+    QVector<Command> commands;
+    int offset = 0;
+
+    while (offset < values.size()) {
+        int chunkSize = qMin<int>(MAX_REGS_PER_FRAME, values.size() - offset);
+
+        QByteArray data;
+        QDataStream s(&data, QIODevice::WriteOnly);
+        s.setByteOrder(QDataStream::BigEndian);
+
+        s << quint16(index + offset);
+        s << quint16(chunkSize);
+        s << quint8(chunkSize * 2);
+
+        for (int i = 0; i < chunkSize; i++) {
+            s << values[offset + i];
+        }
+
+        commands.append(Command(deviceAddr, WRITE_MULTIPLE_REGS, data));
+        offset += chunkSize;
+    }
+
+    return commands;
+}
+
+// Несколько float
+QVector<Command> ModbusRtuProtocol::setParametersF(quint8 deviceAddr, quint16 index, QVector<float> values) {
+    QVector<Command> commands;
+    int offset = 0;
+
+    while (offset < values.size()) {
+        int chunkSize = qMin<int>(MAX_REGS_PER_FRAME / 2, values.size() - offset);
+        // /2 потому что 1 float = 2 регистра
+
+        QByteArray data;
+        QDataStream s(&data, QIODevice::WriteOnly);
+        s.setByteOrder(QDataStream::BigEndian);
+
+        s << quint16(index + offset * 2);   // сдвиг по регистрам
+        s << quint16(chunkSize * 2);        // кол-во регистров
+        s << quint8(chunkSize * 4);         // кол-во байт данных
+
+        for (int i = 0; i < chunkSize; i++) {
+            quint32 raw;
+            memcpy(&raw, &values[offset + i], sizeof(float));
+
+            quint16 high = static_cast<quint16>((raw >> 16) & 0xFFFF);
+            quint16 low  = static_cast<quint16>(raw & 0xFFFF);
+
+            s << high;
+            s << low;
+        }
+
+        commands.append(Command(deviceAddr, WRITE_MULTIPLE_REGS, data));
+        offset += chunkSize;
+    }
+
+    return commands;
+}
+
+// ------------------ GET ------------------
+
+// Один int
+QVector<Command> ModbusRtuProtocol::getParameterI(quint8 deviceAddr, quint16 index) {
+    QByteArray data;
+    QDataStream s(&data, QIODevice::WriteOnly);
+    s.setByteOrder(QDataStream::BigEndian);
+
+    s << index;
+    s << quint16(1);
+
+    return { Command(1, READ_HOLDING_REGS, data) };
+}
+
+// Один float (2 регистра)
+QVector<Command> ModbusRtuProtocol::getParameterF(quint8 deviceAddr, quint16 index) {
+    QByteArray data;
+    QDataStream s(&data, QIODevice::WriteOnly);
+    s.setByteOrder(QDataStream::BigEndian);
+
+    s << index;
+    s << quint16(2);
+
+    return { Command(deviceAddr, READ_HOLDING_REGS, data) };
+}
+
+// Несколько int
+QVector<Command> ModbusRtuProtocol::getParametersI(quint8 deviceAddr, quint16 index, quint16 count) {
+    QVector<Command> commands;
+    quint16 offset = 0;
+
+    while (offset < count) {
+        quint16 chunkSize = qMin<quint16>(MAX_REGS_PER_FRAME, count - offset);
+
+        QByteArray data;
+        QDataStream s(&data, QIODevice::WriteOnly);
+        s.setByteOrder(QDataStream::BigEndian);
+
+        s << quint16(index + offset);
+        s << chunkSize;
+
+        commands.append(Command(deviceAddr, READ_HOLDING_REGS, data));
+        offset += chunkSize;
+    }
+
+    return commands;
+}
+
+// Несколько float
+QVector<Command> ModbusRtuProtocol::getParametersF(quint8 deviceAddr, quint16 index, quint16 count) {
+    QVector<Command> commands;
+    quint16 totalRegs = count * 2;
+    quint16 offset = 0;
+
+    while (offset < totalRegs) {
+        quint16 chunkSize = qMin<quint16>(MAX_REGS_PER_FRAME, totalRegs - offset);
+
+        QByteArray data;
+        QDataStream s(&data, QIODevice::WriteOnly);
+        s.setByteOrder(QDataStream::BigEndian);
+
+        s << quint16(index + offset);
+        s << chunkSize;
+
+        commands.append(Command(deviceAddr, READ_HOLDING_REGS, data));
+        offset += chunkSize;
+    }
+
+    return commands;
+}

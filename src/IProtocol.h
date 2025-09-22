@@ -3,6 +3,8 @@
 
 #include <QByteArray>
 #include <QString>
+#include <QVector>
+#include <QDebug>
 #include "command.h"
 #include "errorcodes.h"
 
@@ -26,10 +28,14 @@ public:
     // Декодирует байтовый массив в структуру ответа
     virtual Response decode(const QByteArray &frame) = 0;
 
-    virtual Command parameterI(int ecode, int index, int value) = 0;
-    virtual Command parameterF(int ecode, int index, float value) = 0;
-    virtual Command parametersI(int ecode, QVector<int> values) = 0;
-    virtual Command parametersF(int ecode, QVector<float> values) = 0;
+    virtual QVector<Command> setParameterI(quint8 deviceAddr, quint16 index, quint16 value) = 0;
+    virtual QVector<Command> setParameterF(quint8 deviceAddr, quint16 index, float value) = 0;
+    virtual QVector<Command> setParametersI(quint8 deviceAddr, quint16 index, QVector<quint16> values) = 0;
+    virtual QVector<Command> setParametersF(quint8 deviceAddr, quint16 index, QVector<float> values) = 0;
+    virtual QVector<Command> getParameterI(quint8 deviceAddr, quint16 index) = 0;
+    virtual QVector<Command> getParameterF(quint8 deviceAddr, quint16 index) = 0;
+    virtual QVector<Command> getParametersI(quint8 deviceAddr, quint16 index, quint16 count) = 0;
+    virtual QVector<Command> getParametersF(quint8 deviceAddr, quint16 index, quint16 count) = 0;
 };
 
 #endif // IPROTOCOL_H

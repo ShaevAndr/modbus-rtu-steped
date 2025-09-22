@@ -35,10 +35,14 @@ public:
     QByteArray encode(const Command &cmd) override;
     Response decode(const QByteArray &frame) override;
 
-    Command parameterI(int ecode, int index, int value) override;
-    Command parameterF(int ecode, int index, float value) override;
-    Command parametersI(int ecode, QVector<int> values) override;
-    Command parametersF(int ecode, QVector<float> values) override;
+    QVector<Command> setParameterI(quint8 deviceAddr, quint16 index, quint16 value) override;
+    QVector<Command> setParameterF(quint8 deviceAddr, quint16 index, float value) override;
+    QVector<Command> setParametersI(quint8 deviceAddr, quint16 index, QVector<quint16> values) override;
+    QVector<Command> setParametersF(quint8 deviceAddr, quint16 index, QVector<float> values) override;
+    QVector<Command> getParameterI(quint8 deviceAddr, quint16 index) override;
+    QVector<Command> getParameterF(quint8 deviceAddr, quint16 index) override;
+    QVector<Command> getParametersI(quint8 deviceAddr, quint16 index, quint16 count) override;
+    QVector<Command> getParametersF(quint8 deviceAddr, quint16 index, quint16 count) override;
 };
 
 #endif // MODBUSRTUPROTOCOL_H

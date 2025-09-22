@@ -12,7 +12,8 @@ struct Command
 
     enum DataType {
         Float,
-        Int
+        Int,
+        Double
     };
 
     CommandType type = Main;
@@ -22,6 +23,7 @@ struct Command
     QByteArray data;
 
 
+    Command() {};
     // Можно добавить конструкторы для удобства
     Command(quint8 addr, quint8 func, const QByteArray &d = QByteArray(), CommandType t = Main)
         : type(t), deviceAddress(addr), functionCode(func), data(d) {}
