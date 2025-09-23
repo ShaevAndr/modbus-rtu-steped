@@ -66,9 +66,10 @@ QVector<Command> ModbusRtuProtocol::setParameterI(quint8 deviceAddr, quint16 ind
     s.setByteOrder(QDataStream::BigEndian);
 
     s << index;
+    s << quint16(1);
     s << value;
 
-    return { Command(deviceAddr, WRITE_SINGLE_REG, data) };
+    return { Command(deviceAddr, WRITE_MULTIPLE_REGS, Command::ReasponseDataType::Int, data) };
 }
 
 // Один float (2 регистра)
@@ -89,7 +90,7 @@ QVector<Command> ModbusRtuProtocol::setParameterF(quint8 deviceAddr, quint16 ind
     s << high;
     s << low;
 
-    return { Command(deviceAddr, WRITE_MULTIPLE_REGS, data) };
+    return { Command(deviceAddr, WRITE_MULTIPLE_REGS, Command::ReasponseDataType::Int, data) };
 }
 
 // Несколько int
@@ -98,7 +99,7 @@ QVector<Command> ModbusRtuProtocol::setParametersI(quint8 deviceAddr, quint16 in
     int offset = 0;
 
     while (offset < values.size()) {
-        int chunkSize = qMin<int>(MAX_REGS_PER_FRAME, values.size() - offset);
+        int chunkSize = qMin<int>(WRITE_MULTIPLE_REGS, values.size() - offset);
 
         QByteArray data;
         QDataStream s(&data, QIODevice::WriteOnly);
@@ -112,7 +113,7 @@ QVector<Command> ModbusRtuProtocol::setParametersI(quint8 deviceAddr, quint16 in
             s << values[offset + i];
         }
 
-        commands.append(Command(deviceAddr, WRITE_MULTIPLE_REGS, data));
+        commands.append(Command(deviceAddr, WRITE_MULTIPLE_REGS, Command::ReasponseDataType::Int, data));
         offset += chunkSize;
     }
 
@@ -147,7 +148,7 @@ QVector<Command> ModbusRtuProtocol::setParametersF(quint8 deviceAddr, quint16 in
             s << low;
         }
 
-        commands.append(Command(deviceAddr, WRITE_MULTIPLE_REGS, data));
+        commands.append(Command(deviceAddr, WRITE_MULTIPLE_REGS, Command::ReasponseDataType::Int, data));
         offset += chunkSize;
     }
 
@@ -156,29 +157,6 @@ QVector<Command> ModbusRtuProtocol::setParametersF(quint8 deviceAddr, quint16 in
 
 // ------------------ GET ------------------
 
-// Один int
-QVector<Command> ModbusRtuProtocol::getParameterI(quint8 deviceAddr, quint16 index) {
-    QByteArray data;
-    QDataStream s(&data, QIODevice::WriteOnly);
-    s.setByteOrder(QDataStream::BigEndian);
-
-    s << index;
-    s << quint16(1);
-
-    return { Command(1, READ_HOLDING_REGS, data) };
-}
-
-// Один float (2 регистра)
-QVector<Command> ModbusRtuProtocol::getParameterF(quint8 deviceAddr, quint16 index) {
-    QByteArray data;
-    QDataStream s(&data, QIODevice::WriteOnly);
-    s.setByteOrder(QDataStream::BigEndian);
-
-    s << index;
-    s << quint16(2);
-
-    return { Command(deviceAddr, READ_HOLDING_REGS, data) };
-}
 
 // Несколько int
 QVector<Command> ModbusRtuProtocol::getParametersI(quint8 deviceAddr, quint16 index, quint16 count) {
@@ -195,7 +173,7 @@ QVector<Command> ModbusRtuProtocol::getParametersI(quint8 deviceAddr, quint16 in
         s << quint16(index + offset);
         s << chunkSize;
 
-        commands.append(Command(deviceAddr, READ_HOLDING_REGS, data));
+        commands.append(Command(deviceAddr, READ_HOLDING_REGS, Command::ReasponseDataType::Int, data));
         offset += chunkSize;
     }
 
@@ -218,7 +196,7 @@ QVector<Command> ModbusRtuProtocol::getParametersF(quint8 deviceAddr, quint16 in
         s << quint16(index + offset);
         s << chunkSize;
 
-        commands.append(Command(deviceAddr, READ_HOLDING_REGS, data));
+        commands.append(Command(deviceAddr, READ_HOLDING_REGS, Command::ReasponseDataType::Float, data));
         offset += chunkSize;
     }
 

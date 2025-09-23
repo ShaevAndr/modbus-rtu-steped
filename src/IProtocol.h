@@ -32,8 +32,6 @@ public:
     virtual QVector<Command> setParameterF(quint8 deviceAddr, quint16 index, float value) = 0;
     virtual QVector<Command> setParametersI(quint8 deviceAddr, quint16 index, QVector<quint16> values) = 0;
     virtual QVector<Command> setParametersF(quint8 deviceAddr, quint16 index, QVector<float> values) = 0;
-    virtual QVector<Command> getParameterI(quint8 deviceAddr, quint16 index) = 0;
-    virtual QVector<Command> getParameterF(quint8 deviceAddr, quint16 index) = 0;
     virtual QVector<Command> getParametersI(quint8 deviceAddr, quint16 index, quint16 count) = 0;
     virtual QVector<Command> getParametersF(quint8 deviceAddr, quint16 index, quint16 count) = 0;
 };

@@ -39,8 +39,6 @@ public:
     QVector<Command> setParameterF(quint8 deviceAddr, quint16 index, float value) override;
     QVector<Command> setParametersI(quint8 deviceAddr, quint16 index, QVector<quint16> values) override;
     QVector<Command> setParametersF(quint8 deviceAddr, quint16 index, QVector<float> values) override;
-    QVector<Command> getParameterI(quint8 deviceAddr, quint16 index) override;
-    QVector<Command> getParameterF(quint8 deviceAddr, quint16 index) override;
     QVector<Command> getParametersI(quint8 deviceAddr, quint16 index, quint16 count) override;
     QVector<Command> getParametersF(quint8 deviceAddr, quint16 index, quint16 count) override;
 };

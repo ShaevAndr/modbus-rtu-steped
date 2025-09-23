@@ -20,11 +20,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    virtual void getParametrsInt(quint16 startRegistr, quint16 paramsCount);
+    virtual void getParametrsFloat(quint16 startRegistr, quint16 paramsCount);
 
 private slots:
     void refreshPorts();
     void onConnectClicked();
-    void onGetInt();
+    void handleGetParametrIntButtonClick();
+    void handleGetParametrsIntButtonClick();
+    void handleGetParametrFloatButtonClick();
+    void handleGetParametrsFloatButtonClick();
     void onJobFinished(const QVector<Response> &responses);
     void onJobError(const QString &err);
 

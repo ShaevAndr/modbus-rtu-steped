@@ -24,7 +24,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(refreshButton, &QPushButton::clicked, this, &MainWindow::refreshPorts);
     connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
-    connect(getIntButton, &QPushButton::clicked, this, &MainWindow::onGetInt);
+    connect(getIntButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrIntButtonClick);
+    connect(getIntsButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrsIntButtonClick);
+    connect(getFloatButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrIntButtonClick);
+    connect(getFloatsButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrsFloatButtonClick);
 
     // Соединяем сигналы от Master со слотами GUI
     connect(m_master, &Master::jobFinished, this, &MainWindow::onJobFinished);
@@ -169,25 +172,45 @@ static QByteArray hexStringToBytes(const QString &s)
     return out;
 }
 
-void MainWindow::onGetInt()
-{
+void MainWindow::handleGetParametrIntButtonClick() {
+    bool ok;
+    quint16 registr = static_cast<quint16>(startRegistrEdit->text().toInt(&ok));
+    if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
+    MainWindow::getParametrsInt(registr, 1);
+}
+
+void MainWindow::handleGetParametrsIntButtonClick() {
+    bool ok;
+    quint16 registr = static_cast<quint16>(startRegistrEdit->text().toInt(&ok));
+    if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
+    quint16 count = static_cast<quint16>(dataEdit->text().toInt(&ok));
+    if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr count"); return; }
+    MainWindow::getParametrsInt(registr, count);
+}
+
+void MainWindow::handleGetParametrFloatButtonClick() {
+    bool ok;
+    quint16 registr = static_cast<quint16>(startRegistrEdit->text().toInt(&ok));
+    if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
+    MainWindow::getParametrsFloat(registr, 1);
+}
+
+void MainWindow::handleGetParametrsFloatButtonClick() {
+    bool ok;
+    quint16 registr = static_cast<quint16>(startRegistrEdit->text().toInt(&ok));
+    if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
+    quint16 count = static_cast<quint16>(dataEdit->text().toInt(&ok));
+    if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr count"); return; }
+    MainWindow::getParametrsInt(registr, count);
+}
+
+void MainWindow::getParametrsInt(quint16 startRegistr, quint16 paramsCount) {
 //    if (!m_transport->isOpen()) {
 //        QMessageBox::warning(this, "Not connected", "Open serial port first");
 //        return;
 //    }
-
-    bool ok;
-    int addr = addrEdit->text().toInt(&ok);
-    if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid address"); return; }
-
-    int registr = startRegistrEdit->text().toInt(&ok);
-    if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
-
-    int data = dataEdit->text().toInt(&ok);
-    if (!ok || addr < 0 || addr > 255) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
-
     // Создаем команду и задание
-    QVector<Command> commands = m_protocol->setParameterI(addr, registr, data);
+    QVector<Command> commands = m_protocol->getParametersI(1, startRegistr, paramsCount);
     for (Command& cmd: commands) {
             qDebug() << cmd.deviceAddress << "-" << cmd.functionCode << "-" << cmd.data;
             qDebug() << cmd.frame.toHex();
@@ -210,7 +233,35 @@ void MainWindow::onGetInt()
          qDebug()<<cmd.frame.toHex();
          logEdit->append(cmd.frame);
     }
-    return;
+}
+
+void MainWindow::getParametrsFloat(quint16 startRegistr, quint16 paramsCount) {
+//    if (!m_transport->isOpen()) {
+//        QMessageBox::warning(this, "Not connected", "Open serial port first");
+//        return;
+//    }
+    // Создаем команду и задание
+    QVector<Command> commands = m_protocol->getParametersF(1, startRegistr, paramsCount);
+    for (Command& cmd: commands) {
+            cmd.frame =  m_protocol->encode(cmd);
+    }
+
+    // QVector<Command> job;
+    // job.append(cmd);
+
+    // Отправляем задание в Master
+    // m_master->enqueueJob(job);
+
+    // Отображаем, что мы отправили (без CRC, т.к. его добавит протокол)
+    // QByteArray frame;
+    // frame.append(cmd.deviceAddress);
+    // frame.append(cmd.functionCode);
+    // frame.append(cmd.data);
+    // logEdit->append(QString("Sent job with 1 command: %1").arg(QString(frame.toHex(' ').toUpper())));
+    for (const Command& cmd: commands) {
+         qDebug()<<cmd.frame.toHex();
+         logEdit->append(cmd.frame);
+    }
 }
 
 void MainWindow::onJobFinished(const QVector<Response> &responses)

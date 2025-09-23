@@ -5,28 +5,36 @@
 
 struct Command
 {
-    enum CommandType {
+    enum class CommandType {
         Prepare, // Подготовительная команда (например, для чтения длины)
         Main     // Основная команда для чтения/записи данных
     };
 
-    enum DataType {
+    enum class ReasponseDataType {
         Float,
         Int,
         Double
     };
 
-    CommandType type = Main;
+    CommandType type = CommandType::Main;
     QByteArray frame;
     quint8 deviceAddress;
     quint8 functionCode;
     QByteArray data;
+    ReasponseDataType dataType = ReasponseDataType::Int;
 
+    Command() = default;
 
-    Command() {};
-    // Можно добавить конструкторы для удобства
-    Command(quint8 addr, quint8 func, const QByteArray &d = QByteArray(), CommandType t = Main)
-        : type(t), deviceAddress(addr), functionCode(func), data(d) {}
+    Command(quint8 addr,
+            quint8 func,
+            ReasponseDataType dt,
+            const QByteArray &d = QByteArray(),
+            CommandType t = CommandType::Main)
+        : type(t),
+          deviceAddress(addr),
+          functionCode(func),
+          data(d),
+          dataType(dt) {}
 };
 
 #endif // COMMAND_H
