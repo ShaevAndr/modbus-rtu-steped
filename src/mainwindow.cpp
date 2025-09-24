@@ -174,6 +174,7 @@ static QByteArray hexStringToBytes(const QString &s)
 
 void MainWindow::handleGetParametrIntButtonClick() {
     bool ok;
+
     quint16 registr = static_cast<quint16>(startRegistrEdit->text().toInt(&ok));
     if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
     MainWindow::getParametrsInt(registr, 1);
@@ -212,16 +213,11 @@ void MainWindow::getParametrsInt(quint16 startRegistr, quint16 paramsCount) {
     // Создаем команду и задание
     QVector<Command> commands = m_protocol->getParametersI(1, startRegistr, paramsCount);
     for (Command& cmd: commands) {
-            qDebug() << cmd.deviceAddress << "-" << cmd.functionCode << "-" << cmd.data;
-            qDebug() << cmd.frame.toHex();
             cmd.frame =  m_protocol->encode(cmd);
     }
 
-    // QVector<Command> job;
-    // job.append(cmd);
-
     // Отправляем задание в Master
-    // m_master->enqueueJob(job);
+     m_master->enqueueJob(commands);
 
     // Отображаем, что мы отправили (без CRC, т.к. его добавит протокол)
     // QByteArray frame;
@@ -230,8 +226,8 @@ void MainWindow::getParametrsInt(quint16 startRegistr, quint16 paramsCount) {
     // frame.append(cmd.data);
     // logEdit->append(QString("Sent job with 1 command: %1").arg(QString(frame.toHex(' ').toUpper())));
     for (const Command& cmd: commands) {
-         qDebug()<<cmd.frame.toHex();
-         logEdit->append(cmd.frame);
+//         qDebug()<<cmd.frame.toHex();
+         logEdit->append(cmd.frame.toHex());
     }
 }
 

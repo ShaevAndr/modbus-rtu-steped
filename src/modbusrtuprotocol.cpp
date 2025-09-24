@@ -13,9 +13,7 @@ QByteArray ModbusRtuProtocol::encode(const Command &cmd)
 {
     QByteArray frame;
     frame.append(cmd.deviceAddress);
-    qDebug() << "address" << frame.toHex();
     frame.append(cmd.functionCode);
-    qDebug() << frame.toHex();
     frame.append(cmd.data);
 
     quint16 crc = ModbusCRC::calculate(reinterpret_cast<const unsigned char*>(frame.constData()), frame.size());
@@ -25,11 +23,15 @@ QByteArray ModbusRtuProtocol::encode(const Command &cmd)
     return frame;
 }
 
+#include "errorcodes.h"
+#include <QDebug>
+
 Response ModbusRtuProtocol::decode(const QByteArray &frame)
 {
     Response response;
+    response.errorCode = ecNoError; // По умолчанию нет ошибки
 
-    // Минимальный размер кадра Modbus: Адрес(1) + Код(1) + CRC(2) = 4
+    // Минимальный размер кадра: Адрес(1) + Код функции(1) + CRC(2)
     if (frame.size() < 4) {
         response.errorCode = ecBadLength;
         response.errorMessage = "Incomplete frame received";
@@ -37,9 +39,11 @@ Response ModbusRtuProtocol::decode(const QByteArray &frame)
     }
 
     // Проверка CRC
-    quint16 receivedCrc = (static_cast<quint8>(frame[frame.size() - 1]) << 8) | static_cast<quint8>(frame[frame.size() - 2]);
+    quint16 receivedCrc = (static_cast<quint8>(frame[frame.size() - 1]) << 8) |
+                           static_cast<quint8>(frame[frame.size() - 2]);
     QByteArray dataToCheck = frame.left(frame.size() - 2);
-    quint16 calculatedCrc = ModbusCRC::calculate(reinterpret_cast<const unsigned char*>(dataToCheck.constData()), dataToCheck.size());
+    quint16 calculatedCrc = ModbusCRC::calculate(
+        reinterpret_cast<const unsigned char*>(dataToCheck.constData()), dataToCheck.size());
 
     if (receivedCrc != calculatedCrc) {
         response.errorCode = ecBadCS;
@@ -47,18 +51,38 @@ Response ModbusRtuProtocol::decode(const QByteArray &frame)
         return response;
     }
 
-    // Проверка на ошибку Modbus (старший бит кода функции установлен)
-    if (frame[1] & 0x80) {
+    quint8 address = static_cast<quint8>(frame[0]);
+    quint8 functionCode = static_cast<quint8>(frame[1]);
+
+    // Проверка на Modbus исключение (старший бит кода функции установлен)
+    if (functionCode & 0x80) {
         response.errorCode = ecBadAnswer;
-        response.errorMessage = "Modbus exception code: " + QString::number(frame[2]);
-        response.data = frame.mid(2, 1); // Код ошибки
+        quint8 exceptionCode = static_cast<quint8>(frame[2]);
+        response.errorMessage = "Modbus exception code: " + QString::number(exceptionCode);
+        response.data = frame.mid(2, 1); // код ошибки
     } else {
-        // Данные находятся между кодом функции и CRC
-        response.data = frame.mid(2, frame.size() - 4);
+        // Обработка стандартного ответа чтения данных (например, функция 0x03)
+        if (frame.size() >= 5) {
+            quint8 byteCount = static_cast<quint8>(frame[2]);
+            if (frame.size() >= static_cast<int>(3 + byteCount + 2)) { // +2 для CRC
+                response.data = frame.mid(3, byteCount);
+            } else {
+                response.errorCode = ecBadLength;
+                response.errorMessage = "Byte count mismatch";
+            }
+        } else {
+            response.errorCode = ecBadLength;
+            response.errorMessage = "Frame too short for data";
+        }
     }
+
+    qDebug() << "[ModbusRtuProtocol] Decoded data:" << response.data.toHex(' ')
+             << "Error code:" << response.errorCode
+             << response.errorMessage;
 
     return response;
 }
+
 
 QVector<Command> ModbusRtuProtocol::setParameterI(quint8 deviceAddr, quint16 index, quint16 value) {
     QByteArray data;
