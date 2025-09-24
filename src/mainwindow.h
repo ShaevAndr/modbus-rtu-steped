@@ -7,6 +7,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include "settings.h"
+#include "request.h"
 
 // Forward declarations
 class Transport;
@@ -30,8 +31,6 @@ private slots:
     void handleGetParametrsIntButtonClick();
     void handleGetParametrFloatButtonClick();
     void handleGetParametrsFloatButtonClick();
-    void onJobFinished(const QVector<Response> &responses);
-    void onJobError(const QString &err);
 
 private:
     void setupUi();

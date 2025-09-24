@@ -22,3 +22,4 @@ HEADERS += \
     modbusrtuprotocol.h \
     errorcodes.h \
     settings.h \
+    request.h \

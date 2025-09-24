@@ -7,6 +7,7 @@
 #include "transport.h"
 #include "IProtocol.h"
 #include "command.h"
+#include "request.h"
 
 class Master : public QObject
 {
@@ -16,7 +17,7 @@ public:
     ~Master();
 
     // Метод для добавления задачи в очередь
-    void enqueueJob(const QVector<Command> &commands);
+    void enqueueJob(const Request &request);
 
 private slots:
     void onDataReceived(const QByteArray &data);
@@ -30,14 +31,13 @@ private:
     IProtocol *m_protocol;
 
     // Очередь "заданий", где каждое задание - это вектор команд
-    QQueue<QVector<Command>> m_jobQueue;
-    QVector<Command> m_currentJob;
+    QQueue<Request> m_jobQueue;
+    Request m_currentJob;
     QVector<Response> m_currentResponses;
     int m_currentCommandIndex = 0;
 
 signals:
-    void jobFinished(const QVector<Response> &responses);
-    void jobError(const QString &error);
+    // Signals are no longer needed, callbacks are used instead
 };
 
 #endif // MASTER_H

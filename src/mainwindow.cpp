@@ -26,12 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
     connect(getIntButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrIntButtonClick);
     connect(getIntsButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrsIntButtonClick);
-    connect(getFloatButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrIntButtonClick);
+    connect(getFloatButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrFloatButtonClick);
     connect(getFloatsButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrsFloatButtonClick);
-
-    // Соединяем сигналы от Master со слотами GUI
-    connect(m_master, &Master::jobFinished, this, &MainWindow::onJobFinished);
-    connect(m_master, &Master::jobError, this, &MainWindow::onJobError);
 
     refreshPorts();
 }
@@ -202,72 +198,53 @@ void MainWindow::handleGetParametrsFloatButtonClick() {
     if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr address"); return; }
     quint16 count = static_cast<quint16>(dataEdit->text().toInt(&ok));
     if (!ok) { QMessageBox::warning(this, "Input error", "Invalid registr count"); return; }
-    MainWindow::getParametrsInt(registr, count);
+    MainWindow::getParametrsFloat(registr, count);
 }
 
 void MainWindow::getParametrsInt(quint16 startRegistr, quint16 paramsCount) {
-//    if (!m_transport->isOpen()) {
-//        QMessageBox::warning(this, "Not connected", "Open serial port first");
-//        return;
-//    }
-    // Создаем команду и задание
-    QVector<Command> commands = m_protocol->getParametersI(1, startRegistr, paramsCount);
-    for (Command& cmd: commands) {
-            cmd.frame =  m_protocol->encode(cmd);
+    if (!m_transport->isOpen()) {
+        QMessageBox::warning(this, "Not connected", "Open serial port first");
+        return;
     }
 
-    // Отправляем задание в Master
-     m_master->enqueueJob(commands);
+    Request request;
+    request.commands = m_protocol->getParametersI(1, startRegistr, paramsCount);
+    request.onSuccess = [this](const QVector<Response> &responses){
+        for(const Response& resp : responses) {
+            logEdit->append(QString("Received: %1").arg(QString(resp.data.toHex(' ').toUpper())));
+        }
+    };
+    request.onError = [this](const QString &err){
+        logEdit->append(QString("<font color='red'>Error: %1</font>").arg(err));
+    };
 
-    // Отображаем, что мы отправили (без CRC, т.к. его добавит протокол)
-    // QByteArray frame;
-    // frame.append(cmd.deviceAddress);
-    // frame.append(cmd.functionCode);
-    // frame.append(cmd.data);
-    // logEdit->append(QString("Sent job with 1 command: %1").arg(QString(frame.toHex(' ').toUpper())));
-    for (const Command& cmd: commands) {
-//         qDebug()<<cmd.frame.toHex();
-         logEdit->append(cmd.frame.toHex());
+    m_master->enqueueJob(request);
+
+    for (const Command& cmd: request.commands) {
+         logEdit->append(m_protocol->encode(cmd).toHex());
     }
 }
 
 void MainWindow::getParametrsFloat(quint16 startRegistr, quint16 paramsCount) {
-//    if (!m_transport->isOpen()) {
-//        QMessageBox::warning(this, "Not connected", "Open serial port first");
-//        return;
-//    }
-    // Создаем команду и задание
-    QVector<Command> commands = m_protocol->getParametersF(1, startRegistr, paramsCount);
-    for (Command& cmd: commands) {
-            cmd.frame =  m_protocol->encode(cmd);
+    if (!m_transport->isOpen()) {
+        QMessageBox::warning(this, "Not connected", "Open serial port first");
+        return;
     }
+    
+    Request request;
+    request.commands = m_protocol->getParametersF(1, startRegistr, paramsCount);
+    request.onSuccess = [this](const QVector<Response> &responses){
+        for(const Response& resp : responses) {
+            logEdit->append(QString("Received: %1").arg(QString(resp.data.toHex(' ').toUpper())));
+        }
+    };
+    request.onError = [this](const QString &err){
+        logEdit->append(QString("<font color='red'>Error: %1</font>").arg(err));
+    };
 
-    // QVector<Command> job;
-    // job.append(cmd);
+    m_master->enqueueJob(request);
 
-    // Отправляем задание в Master
-    // m_master->enqueueJob(job);
-
-    // Отображаем, что мы отправили (без CRC, т.к. его добавит протокол)
-    // QByteArray frame;
-    // frame.append(cmd.deviceAddress);
-    // frame.append(cmd.functionCode);
-    // frame.append(cmd.data);
-    // logEdit->append(QString("Sent job with 1 command: %1").arg(QString(frame.toHex(' ').toUpper())));
-    for (const Command& cmd: commands) {
-         qDebug()<<cmd.frame.toHex();
-         logEdit->append(cmd.frame);
+    for (const Command& cmd: request.commands) {
+         logEdit->append(m_protocol->encode(cmd).toHex());
     }
-}
-
-void MainWindow::onJobFinished(const QVector<Response> &responses)
-{
-    for(const Response& resp : responses) {
-        logEdit->append(QString("Received: %1").arg(QString(resp.data.toHex(' ').toUpper())));
-    }
-}
-
-void MainWindow::onJobError(const QString &err)
-{
-    logEdit->append(QString("<font color='red'>Error: %1</font>").arg(err));
 }
