@@ -14,6 +14,11 @@ Master::Master(Transport *transport, IProtocol *protocol, QObject *parent)
     connect(&m_timer, &QTimer::timeout, this, &Master::onTimeout);
 }
 
+bool Master::isTransportOpen() const
+{
+    return m_transport->isOpen();
+}
+
 Master::~Master()
 {
 }

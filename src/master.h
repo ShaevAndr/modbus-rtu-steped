@@ -20,6 +20,8 @@ public:
     // Метод для добавления задачи в очередь
     void enqueueJob(const Request &request);
 
+    bool isTransportOpen() const;
+
 private slots:
     void onDataReceived(const QByteArray &data);
     void onErrorOccurred(const QString &error);

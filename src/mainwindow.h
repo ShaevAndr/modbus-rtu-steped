@@ -6,9 +6,10 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QLabel>
+#include <QVector>
 #include "settings.h"
 #include "request.h"
-#include "devicegridwidget.h"
+#include "device.h"
 
 // Forward declarations
 class Transport;
@@ -24,7 +25,6 @@ public:
     ~MainWindow();
     virtual void getParametrsInt(quint16 startRegistr, quint16 paramsCount);
     virtual void getParametrsFloat(quint16 startRegistr, quint16 paramsCount);
-    virtual void checkDevice(quint8 deviceAddress);
 
 private slots:
     void refreshPorts();
@@ -34,6 +34,7 @@ private slots:
     void handleGetParametrFloatButtonClick();
     void handleGetParametrsFloatButtonClick();
     void handleFindDevicesButtonClick();
+    void onDeviceSelected(int address);
 
 private:
     void setupUi();
@@ -72,5 +73,5 @@ private:
     IProtocol* m_protocol;
     Master* m_master;
     SerialSettings settings;
-    DeviceGridWidget *m_searchWidget;
+    QVector<Device> m_devices;
 };
