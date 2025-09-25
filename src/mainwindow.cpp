@@ -15,6 +15,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    m_searchWidget = new DeviceGridWidget(247);
     setupUi();
 
     // Инициализация бэкенда
@@ -22,12 +23,15 @@ MainWindow::MainWindow(QWidget *parent)
     m_protocol = new ModbusRtuProtocol(); // Не QObject, родитель не нужен
     m_master = new Master(m_transport, m_protocol, this);
 
+
+
     connect(refreshButton, &QPushButton::clicked, this, &MainWindow::refreshPorts);
     connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
     connect(getIntButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrIntButtonClick);
     connect(getIntsButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrsIntButtonClick);
     connect(getFloatButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrFloatButtonClick);
     connect(getFloatsButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrsFloatButtonClick);
+    connect(findDevices, &QPushButton::clicked, this, &MainWindow::handleFindDevicesButtonClick);
 
     refreshPorts();
 }
@@ -63,6 +67,7 @@ void MainWindow::setupUi()
     setIntsButton = new QPushButton("getInts");
     setFloatButton = new QPushButton("getFloat");
     setFloatsButton = new QPushButton("getFloats");
+    findDevices = new QPushButton("findDevices");
 
     logEdit = new QTextEdit; logEdit->setReadOnly(true);
 
@@ -91,6 +96,7 @@ void MainWindow::setupUi()
     cmdRow->addWidget(startRegistrEdit);
     cmdRow->addWidget(dataEdit);
 
+
     cmdRow->addWidget(crcLabel);
     cmdRow->addWidget(getIntButton);
     cmdRow->addWidget(getFloatButton);
@@ -100,12 +106,14 @@ void MainWindow::setupUi()
     cmdRow->addWidget(setFloatButton);
     cmdRow->addWidget(setIntsButton);
     cmdRow->addWidget(setFloatsButton);
+    cmdRow->addWidget(findDevices);
 
     QVBoxLayout *mainLay = new QVBoxLayout;
     mainLay->addLayout(form);
     mainLay->addLayout(cmdRow);
     mainLay->addWidget(new QLabel("Response / Log:"));
     mainLay->addWidget(logEdit);
+    mainLay->addWidget(m_searchWidget);
 
     central->setLayout(mainLay);
     setWindowTitle("Modbus RTU Master");
@@ -201,6 +209,17 @@ void MainWindow::handleGetParametrsFloatButtonClick() {
     MainWindow::getParametrsFloat(registr, count);
 }
 
+void MainWindow::handleFindDevicesButtonClick() {
+    if (!m_transport->isOpen()){
+        QMessageBox::warning(this, "Not connected", "Open serial port first");
+        return;
+    }
+
+    for (quint8 i = 1; i < 248; i++) {
+        MainWindow::checkDevice(i);
+    }
+
+}
 void MainWindow::getParametrsInt(quint16 startRegistr, quint16 paramsCount) {
     if (!m_transport->isOpen()) {
         QMessageBox::warning(this, "Not connected", "Open serial port first");
@@ -225,6 +244,7 @@ void MainWindow::getParametrsInt(quint16 startRegistr, quint16 paramsCount) {
     }
 }
 
+
 void MainWindow::getParametrsFloat(quint16 startRegistr, quint16 paramsCount) {
     if (!m_transport->isOpen()) {
         QMessageBox::warning(this, "Not connected", "Open serial port first");
@@ -247,4 +267,26 @@ void MainWindow::getParametrsFloat(quint16 startRegistr, quint16 paramsCount) {
     for (const Command& cmd: request.commands) {
          logEdit->append(m_protocol->encode(cmd).toHex());
     }
+}
+
+void MainWindow::checkDevice(quint8 deviceAddress) {
+    Request request;
+    request.commands = m_protocol->getParametersI(deviceAddress,1, 1);
+    request.onSuccess = [this, deviceAddress](const QVector<Response> &responses){
+        for(const Response& resp : responses) {
+            this->m_searchWidget->setDeviceStatus(deviceAddress, true);
+            logEdit->append(QString("Device %1 is exist").arg(deviceAddress));
+        }
+    };
+    request.onError = [this, deviceAddress](const QString &err){
+        this->m_searchWidget->setDeviceStatus(deviceAddress, false);
+        logEdit->append(QString("<font color='red'>device %1 not exist</font>").arg(deviceAddress));
+    };
+
+    m_master->enqueueJob(request);
+
+    for (const Command& cmd: request.commands) {
+         logEdit->append(m_protocol->encode(cmd).toHex());
+    }
+
 }

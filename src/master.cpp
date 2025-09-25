@@ -9,6 +9,9 @@ Master::Master(Transport *transport, IProtocol *protocol, QObject *parent)
 
     connect(m_transport, &Transport::dataReceived, this, &Master::onDataReceived);
     connect(m_transport, &Transport::errorOccurred, this, &Master::onErrorOccurred);
+
+    m_timer.setSingleShot(true);
+    connect(&m_timer, &QTimer::timeout, this, &Master::onTimeout);
 }
 
 Master::~Master()
@@ -30,6 +33,7 @@ void Master::enqueueJob(const Request &request)
 
 void Master::onDataReceived(const QByteArray &data)
 {
+    m_timer.stop(); // <-- Сброс таймера, так как ответ пришёл
     qDebug() << "Master received data:" << data.toHex(' ');
 
     if (m_currentJob.commands.isEmpty()) {
@@ -107,4 +111,22 @@ void Master::sendCommand(const Command &cmd)
     QByteArray request = m_protocol->encode(cmd);
     qDebug() << "Master sending data:" << request.toHex(' ');
     m_transport->send(request);
+
+    m_timer.start(1000);
+}
+
+void Master::onTimeout()
+{
+    qWarning() << "Timeout waiting for response.";
+
+    if (m_currentJob.onError) {
+        m_currentJob.onError("Timeout waiting for response");
+    }
+
+    // Сброс текущего задания и переход к следующему
+    m_currentJob = Request();
+    m_currentResponses.clear();
+    m_currentCommandIndex = 0;
+
+    processQueue();
 }

@@ -3,6 +3,7 @@ QT += core gui widgets serialport
 CONFIG += c++17
 
 SOURCES += \
+    devicegridwidget.cpp \
     main.cpp \
     mainwindow.cpp \
     serialporttransport.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
 HEADERS += \
     IProtocol.h \
     command.h \
+    devicegridwidget.h \
     mainwindow.h \
     transport.h \
     serialporttransport.h \

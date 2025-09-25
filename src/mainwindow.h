@@ -8,6 +8,7 @@
 #include <QLabel>
 #include "settings.h"
 #include "request.h"
+#include "devicegridwidget.h"
 
 // Forward declarations
 class Transport;
@@ -23,6 +24,7 @@ public:
     ~MainWindow();
     virtual void getParametrsInt(quint16 startRegistr, quint16 paramsCount);
     virtual void getParametrsFloat(quint16 startRegistr, quint16 paramsCount);
+    virtual void checkDevice(quint8 deviceAddress);
 
 private slots:
     void refreshPorts();
@@ -31,6 +33,7 @@ private slots:
     void handleGetParametrsIntButtonClick();
     void handleGetParametrFloatButtonClick();
     void handleGetParametrsFloatButtonClick();
+    void handleFindDevicesButtonClick();
 
 private:
     void setupUi();
@@ -59,6 +62,7 @@ private:
     QPushButton *setIntsButton;
     QPushButton *setFloatButton;
     QPushButton *setFloatsButton;
+    QPushButton *findDevices;
 
 
     QTextEdit *logEdit;
@@ -68,4 +72,5 @@ private:
     IProtocol* m_protocol;
     Master* m_master;
     SerialSettings settings;
+    DeviceGridWidget *m_searchWidget;
 };

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QQueue>
 #include <QVector>
+#include <Qtimer>
 #include "transport.h"
 #include "IProtocol.h"
 #include "command.h"
@@ -23,6 +24,7 @@ private slots:
     void onDataReceived(const QByteArray &data);
     void onErrorOccurred(const QString &error);
     void processQueue();
+    void onTimeout();
 
 private:
     void sendCommand(const Command &cmd);
@@ -35,6 +37,7 @@ private:
     Request m_currentJob;
     QVector<Response> m_currentResponses;
     int m_currentCommandIndex = 0;
+    QTimer m_timer;
 
 signals:
     // Signals are no longer needed, callbacks are used instead
