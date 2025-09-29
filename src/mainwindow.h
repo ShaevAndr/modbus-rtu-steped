@@ -7,9 +7,11 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QVector>
+#include <QThread>
 #include "settings.h"
 #include "request.h"
 #include "device.h"
+#include "searchdevicewidget.h"
 
 // Forward declarations
 class Transport;
@@ -67,6 +69,8 @@ private:
 
 
     QTextEdit *logEdit;
+
+    SearchDeviceWidget *searchWidget;
 
     // backend
     Transport* m_transport;

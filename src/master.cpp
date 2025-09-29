@@ -115,7 +115,7 @@ void Master::sendCommand(const Command &cmd)
 
     QByteArray request = m_protocol->encode(cmd);
     qDebug() << "Master sending data:" << request.toHex(' ');
-    m_transport->send(request);
+    emit send(request);
 
     m_timer.start(1000);
 }

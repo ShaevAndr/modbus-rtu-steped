@@ -15,9 +15,9 @@ public:
     bool open(const SerialSettings &settings) override;
     void close() override;
     bool isOpen() const override;
-    void send(const QByteArray &data) override;
 
 private slots:
+    void send(const QByteArray &data) override;
     void onReadyRead();
     void onFrameTimeout();
     void onError(QSerialPort::SerialPortError error);

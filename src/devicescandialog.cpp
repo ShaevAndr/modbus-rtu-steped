@@ -58,7 +58,7 @@ void DeviceScanDialog::setupUi()
     }
     
     scrollArea->setWidget(gridContainer);
-    mainLayout->addWidget(scrollAria);
+    mainLayout->addWidget(scrollArea);
 
     setLayout(mainLayout);
 }

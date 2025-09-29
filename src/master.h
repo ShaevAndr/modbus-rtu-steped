@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QQueue>
 #include <QVector>
-#include <Qtimer>
+#include <QTimer>
 #include "transport.h"
 #include "IProtocol.h"
 #include "command.h"
@@ -42,6 +42,7 @@ private:
     QTimer m_timer;
 
 signals:
+    void send(const QByteArray& frame);
     // Signals are no longer needed, callbacks are used instead
 };
 

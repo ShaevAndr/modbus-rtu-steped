@@ -15,6 +15,8 @@ public:
     virtual bool open(const SerialSettings &settings) = 0;
     virtual void close() = 0;
     virtual bool isOpen() const = 0;
+
+public slots:
     virtual void send(const QByteArray &data) = 0;
 
 signals:

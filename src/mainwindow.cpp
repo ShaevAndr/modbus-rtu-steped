@@ -23,15 +23,23 @@ MainWindow::MainWindow(QWidget *parent)
     m_protocol = new ModbusRtuProtocol(); // Не QObject, родитель не нужен
     m_master = new Master(m_transport, m_protocol, this);
 
+    QThread *transportTrhead = new QThread;
 
+    m_transport->moveToThread(transportTrhead);
 
+    connect(m_master, &Master::send, m_transport, &Transport::send, Qt::QueuedConnection);
     connect(refreshButton, &QPushButton::clicked, this, &MainWindow::refreshPorts);
     connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectClicked);
     connect(getIntButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrIntButtonClick);
     connect(getIntsButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrsIntButtonClick);
     connect(getFloatButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrFloatButtonClick);
     connect(getFloatsButton, &QPushButton::clicked, this, &MainWindow::handleGetParametrsFloatButtonClick);
-    connect(findDevices, &QPushButton::clicked, this, &MainWindow::handleFindDevicesButtonClick);
+    // connect(findDevices, &QPushButton::clicked, this, &MainWindow::handleFindDevicesButtonClick);
+    connect(findDevices, &QPushButton::clicked, searchWidget, [this](){
+        searchWidget->show();
+    });
+
+    transportTrhead->start();
 
     refreshPorts();
 }
@@ -46,6 +54,7 @@ void MainWindow::setupUi()
     QWidget *central = new QWidget(this);
     setCentralWidget(central);
 
+    searchWidget = new SearchDeviceWidget;
     portCombo = new QComboBox;
     baudCombo = new QComboBox;
     parityCombo = new QComboBox;
