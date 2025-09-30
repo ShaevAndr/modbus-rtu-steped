@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
         searchWidget->show();
     });
 
+
     transportTrhead->start();
 
     refreshPorts();
@@ -134,6 +135,19 @@ void MainWindow::refreshPorts()
     for (const QSerialPortInfo &p : ports) {
         portCombo->addItem(p.portName());
     }
+}
+
+void MainWindow::checkDeviceAddress(int address) {
+    if (address==2) {
+        emit checkDeviceResult(true, address, "new Device");
+    }else {
+        emit checkDeviceResult(false, address);
+    }
+}
+
+void MainWindow::broadcastSearchDevices() {
+    QMap<int, QString> result = {{2, "new device"}, {3, "new device"}, {23, "new device"}, {24, "new device"}};
+    emit broadcastSerchDeviceResult(result);
 }
 
 void MainWindow::onConnectClicked()

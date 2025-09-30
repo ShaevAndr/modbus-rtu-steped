@@ -7,6 +7,7 @@ SearchDeviceWidget::SearchDeviceWidget(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->CancelSearchButton, &QPushButton::clicked, this, &SearchDeviceWidget::cancelSearch);
+    connect(ui->checkBox, &QCheckBox::clicked, this, &SearchDeviceWidget::handleBroadcastSelect);
 }
 
 
@@ -18,6 +19,7 @@ SearchDeviceWidget::~SearchDeviceWidget()
 
 void SearchDeviceWidget::handleBroadcastSelect(bool checkboxValue)
 {
+    qDebug()<<checkboxValue;
     if (checkboxValue) {
         ui->IntervalFrom->setEnabled(false);
         ui->IntervalTo->setEnabled(false);
@@ -27,18 +29,23 @@ void SearchDeviceWidget::handleBroadcastSelect(bool checkboxValue)
     }
 }
 
-void SearchDeviceWidget::handleCheckResult(bool hasDevice)
+void SearchDeviceWidget::handleCheckResult(bool hasDevice, int address)
 {
+    qDebug()<<hasDevice<<"-"<<address;
     return;
 }
 
-void SearchDeviceWidget::handleCheckResult(bool hasDevice, const Device &device)
+void SearchDeviceWidget::handleCheckResult(bool hasDevice, int address, const QString& description)
 {
+    qDebug()<<hasDevice<<"-"<<address<<"-"<<description;
     return;
 }
 
-void SearchDeviceWidget::handleCheckResult(const QVector<Device> &devices)
+void SearchDeviceWidget::handleCheckResult(const QMap<int, QString>& devices)
 {
+    for (auto it = devices.cbegin(); it != devices.cend(); ++it) {
+        qDebug() << "key:" << it.key() << "value:" << it.value();
+    }
     return;
 }
 

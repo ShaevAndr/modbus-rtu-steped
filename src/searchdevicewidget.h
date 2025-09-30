@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QVector>
+#include <QDebug>
 
 namespace Ui {
 class SearchDeviceWidget;
@@ -13,11 +14,6 @@ class SearchDeviceWidget : public QDialog
     Q_OBJECT
 
 public:
-    struct Device {
-        int address;
-        QString description;
-    };
-
     explicit SearchDeviceWidget(QWidget *parent = nullptr);
     ~SearchDeviceWidget();
 
@@ -36,9 +32,9 @@ private:
     void handleBroadcastSelect(bool checkboxValue);
 
 private slots:
-    void handleCheckResult(bool hasDevice);
-    void handleCheckResult(bool hasDevice, const Device& device);
-    void handleCheckResult(const QVector<Device>& devices);
+    void handleCheckResult(bool hasDevice, int address);
+    void handleCheckResult(bool hasDevice, int address, const QString& description);
+    void handleCheckResult(const QMap<int, QString>& devices);
 
 
 };

@@ -37,6 +37,13 @@ private slots:
     void handleGetParametrsFloatButtonClick();
     void handleFindDevicesButtonClick();
     void onDeviceSelected(int address);
+    void checkDeviceAddress(int address);
+    void broadcastSearchDevices();
+
+signals:
+    void checkDeviceResult(bool result, int address);
+    void checkDeviceResult(bool result, int address, const QString& description);
+    void broadcastSerchDeviceResult(const QMap<int, QString>& devices);
 
 private:
     void setupUi();
