@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QVector>
 #include <QDebug>
+#include <QList>
 
 namespace Ui {
 class SearchDeviceWidget;
@@ -27,15 +28,16 @@ private:
     int startAddressSearch;
     int endAddressSearch;
     bool isBroadcast;
+    QList<int> *addressesList;
 
     void handleSearchButtonClick();
     void handleBroadcastSelect(bool checkboxValue);
+    void processCheckAddress();
 
-private slots:
+public slots:
     void handleCheckResult(bool hasDevice, int address);
     void handleCheckResult(bool hasDevice, int address, const QString& description);
     void handleCheckResult(const QMap<int, QString>& devices);
-
 
 };
 

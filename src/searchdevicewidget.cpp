@@ -1,3 +1,4 @@
+#include <QIntValidator>
 #include "searchdevicewidget.h"
 #include "ui_searchdevicewidget.h"
 
@@ -6,15 +7,43 @@ SearchDeviceWidget::SearchDeviceWidget(QWidget *parent)
     , ui(new Ui::SearchDeviceWidget)
 {
     ui->setupUi(this);
+    addressesList = new QList<int>;
+    QIntValidator *intervalValidator = new QIntValidator(0, 247, this);
+    ui->IntervalFrom->setValidator(intervalValidator);
+    ui->IntervalTo->setValidator(intervalValidator);
+
     connect(ui->CancelSearchButton, &QPushButton::clicked, this, &SearchDeviceWidget::cancelSearch);
     connect(ui->checkBox, &QCheckBox::clicked, this, &SearchDeviceWidget::handleBroadcastSelect);
+    connect(ui->SearchDeviceButton, &QPushButton::clicked, this, &SearchDeviceWidget::handleSearchButtonClick);
 }
-
-
 
 SearchDeviceWidget::~SearchDeviceWidget()
 {
     delete ui;
+    delete addressesList;
+}
+
+void SearchDeviceWidget::handleSearchButtonClick()
+{
+    if (ui->checkBox->isChecked()) {
+        emit broadcastSearch();
+    } else {
+        bool ok;
+        startAddressSearch = ui->IntervalFrom->text().toInt(&ok);
+        if (!ok) {
+            qDebug()<<"from - not a number";
+            return;
+        }
+        endAddressSearch = ui->IntervalTo->text().toInt(&ok);
+        if (!ok) {
+            qDebug()<<"to - not a number";
+            return;
+        }
+        for (int i=startAddressSearch; i<=endAddressSearch; i++ ) {
+            addressesList->append(i);
+        }
+        processCheckAddress();
+    }
 }
 
 void SearchDeviceWidget::handleBroadcastSelect(bool checkboxValue)
@@ -29,15 +58,29 @@ void SearchDeviceWidget::handleBroadcastSelect(bool checkboxValue)
     }
 }
 
+void SearchDeviceWidget::processCheckAddress()
+{
+    qDebug()<<"we are in processCheckAddress";
+    int progress = (((endAddressSearch-startAddressSearch)-addressesList->size())/(endAddressSearch-startAddressSearch))*100;
+    ui->SearchProgressBar->setValue(progress);
+    if (!addressesList->size()) {
+        return;
+    }
+    int currentAddress = addressesList->takeFirst();
+    emit checkAddress(currentAddress);
+}
+
 void SearchDeviceWidget::handleCheckResult(bool hasDevice, int address)
 {
     qDebug()<<hasDevice<<"-"<<address;
+    processCheckAddress();
     return;
 }
 
 void SearchDeviceWidget::handleCheckResult(bool hasDevice, int address, const QString& description)
 {
     qDebug()<<hasDevice<<"-"<<address<<"-"<<description;
+    processCheckAddress();
     return;
 }
 

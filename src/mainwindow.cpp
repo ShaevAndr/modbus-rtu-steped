@@ -38,7 +38,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(findDevices, &QPushButton::clicked, searchWidget, [this](){
         searchWidget->show();
     });
+    connect(searchWidget, &SearchDeviceWidget::checkAddress, this, &MainWindow::checkDeviceAddress);
+    connect(searchWidget, &SearchDeviceWidget::broadcastSearch, this, &MainWindow::broadcastSearchDevices);
+    connect(this,
+            QOverload<bool,int>::of(&MainWindow::checkDeviceResult),
+            searchWidget,
+            QOverload<bool,int>::of(&SearchDeviceWidget::handleCheckResult));
 
+    transportTrhead->start();
+    connect(this,
+            QOverload<bool,int, const QString&>::of(&MainWindow::checkDeviceResult),
+            searchWidget,
+            QOverload<bool,int, const QString&>::of(&SearchDeviceWidget::handleCheckResult));
 
     transportTrhead->start();
 
@@ -138,6 +149,7 @@ void MainWindow::refreshPorts()
 }
 
 void MainWindow::checkDeviceAddress(int address) {
+    qDebug()<<"проверка устройства по адресу - "<< address;
     if (address==2) {
         emit checkDeviceResult(true, address, "new Device");
     }else {
@@ -146,6 +158,7 @@ void MainWindow::checkDeviceAddress(int address) {
 }
 
 void MainWindow::broadcastSearchDevices() {
+    qDebug()<<"широкополосный поиск устройств";
     QMap<int, QString> result = {{2, "new device"}, {3, "new device"}, {23, "new device"}, {24, "new device"}};
     emit broadcastSerchDeviceResult(result);
 }
