@@ -226,3 +226,11 @@ QVector<Command> ModbusRtuProtocol::getParametersF(quint8 deviceAddr, quint16 in
 
     return commands;
 }
+
+QVector<Command> ModbusRtuProtocol::getDeviceInfo(quint8 deviceAddr) {
+    QVector<Command> commands;
+    QByteArray data;
+    data.append("\x0E\x00", 2);
+    commands.append(Command(deviceAddr, ENCAPSULATED_INTERFACE, Command::ReasponseDataType::Char, data));
+    return commands;
+}

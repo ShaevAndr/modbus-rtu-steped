@@ -13,7 +13,8 @@ struct Command
     enum class ReasponseDataType {
         Float,
         Int,
-        Double
+        Double,
+        Char
     };
 
     CommandType type = CommandType::Main;
