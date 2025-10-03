@@ -45,11 +45,15 @@ MainWindow::MainWindow(QWidget *parent)
             searchWidget,
             QOverload<bool,int>::of(&SearchDeviceWidget::handleCheckResult));
 
-    transportTrhead->start();
     connect(this,
             QOverload<bool,int, const QString&>::of(&MainWindow::checkDeviceResult),
             searchWidget,
             QOverload<bool,int, const QString&>::of(&SearchDeviceWidget::handleCheckResult));
+
+    connect(this,
+        &MainWindow::broadcastSerchDeviceResult,
+        searchWidget,
+        QOverload<const QMap<int, QString>&>::of(&SearchDeviceWidget::handleCheckResult));
 
     transportTrhead->start();
 

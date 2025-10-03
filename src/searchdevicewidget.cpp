@@ -1,6 +1,7 @@
 #include <QIntValidator>
 #include "searchdevicewidget.h"
 #include "ui_searchdevicewidget.h"
+#include "ConnectDeviceButton.cpp"
 
 SearchDeviceWidget::SearchDeviceWidget(QWidget *parent)
     : QDialog(parent)
@@ -25,6 +26,7 @@ SearchDeviceWidget::~SearchDeviceWidget()
 
 void SearchDeviceWidget::handleSearchButtonClick()
 {
+    clearLayout(ui->verticalLayout_2);
     if (ui->checkBox->isChecked()) {
         emit broadcastSearch();
     } else {
@@ -72,6 +74,15 @@ void SearchDeviceWidget::processCheckAddress()
 
 void SearchDeviceWidget::handleCheckResult(bool hasDevice, int address)
 {
+    if (hasDevice) {
+        ConnectDeviceButton *btn = new ConnectDeviceButton(address);
+        ui->verticalLayout_2->addWidget(btn);
+        connect(btn, &ConnectDeviceButton::connectDeviceClicked, this, [this](int address){
+            qDebug()<<"connect device - " << address;
+            emit connectDevice(address);
+        });
+    }
+
     qDebug()<<hasDevice<<"-"<<address;
     processCheckAddress();
     return;
@@ -79,6 +90,12 @@ void SearchDeviceWidget::handleCheckResult(bool hasDevice, int address)
 
 void SearchDeviceWidget::handleCheckResult(bool hasDevice, int address, const QString& description)
 {
+    ConnectDeviceButton *btn = new ConnectDeviceButton(address, description);
+    ui->verticalLayout_2->addWidget(btn);
+    connect(btn, &ConnectDeviceButton::connectDeviceClicked, this, [this](int address){
+        qDebug()<<"connect device - " << address;
+        emit connectDevice(address);
+    });
     qDebug()<<hasDevice<<"-"<<address<<"-"<<description;
     processCheckAddress();
     return;
@@ -87,9 +104,29 @@ void SearchDeviceWidget::handleCheckResult(bool hasDevice, int address, const QS
 void SearchDeviceWidget::handleCheckResult(const QMap<int, QString>& devices)
 {
     for (auto it = devices.cbegin(); it != devices.cend(); ++it) {
+        ConnectDeviceButton *btn = new ConnectDeviceButton(it.key(), it.value());
+        ui->verticalLayout_2->addWidget(btn);
+        connect(btn, &ConnectDeviceButton::connectDeviceClicked, this, [this](int address){
+            qDebug()<<"connect device - " << address;
+            emit connectDevice(address);
+        });
         qDebug() << "key:" << it.key() << "value:" << it.value();
     }
     return;
+}
+
+void SearchDeviceWidget::clearLayout(QLayout* layout) {
+    if (!layout)
+        return;
+
+    QLayoutItem* item;
+    while ((item = layout->takeAt(0)) != nullptr) { // берём первый элемент
+        if (QWidget* widget = item->widget()) {
+            widget->setParent(nullptr);  // отвязываем виджет от layout
+            delete widget;               // удаляем виджет
+        }
+        delete item;                    // удаляем QLayoutItem
+    }
 }
 
 

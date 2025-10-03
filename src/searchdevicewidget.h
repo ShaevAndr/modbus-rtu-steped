@@ -22,6 +22,7 @@ signals:
     void cancelSearch();
     void broadcastSearch();
     void checkAddress(int address);
+    void connectDevice(int address);
 
 private:
     Ui::SearchDeviceWidget *ui;
@@ -30,6 +31,7 @@ private:
     bool isBroadcast;
     QList<int> *addressesList;
 
+    void clearLayout(QLayout *layout);
     void handleSearchButtonClick();
     void handleBroadcastSelect(bool checkboxValue);
     void processCheckAddress();

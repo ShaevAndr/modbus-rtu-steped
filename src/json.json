@@ -1,0 +1,2536 @@
+{
+    "Enums": [
+        {
+            "Desc": "",
+            "ID": "Enum_AlarmCompMode",
+            "Name": "Alarm comparison mode",
+            "Values": [
+                {
+                    "Desc": "Available for rectangular and sector zones",
+                    "Name": "XY",
+                    "Value": 0
+                },
+                {
+                    "Desc": "Available for measurement zone",
+                    "Name": "AT",
+                    "Value": 1
+                },
+                {
+                    "Desc": "Available for measurement zone",
+                    "Name": "XT",
+                    "Value": 2
+                },
+                {
+                    "Desc": "Available for measurement zone",
+                    "Name": "YT",
+                    "Value": 3
+                }
+            ]
+        },
+        {
+            "Desc": "",
+            "ID": "Enum_AlarmZonesMode",
+            "Name": "Alarm zones mode",
+            "Values": [
+                {
+                    "Desc": "",
+                    "Name": "Выключена",
+                    "Value": 0
+                },
+                {
+                    "Desc": "",
+                    "Name": "Прямоугольная",
+                    "Value": 1
+                },
+                {
+                    "Desc": "",
+                    "Name": "Секторная",
+                    "Value": 2
+                },
+                {
+                    "Desc": "",
+                    "Name": "Уровень",
+                    "Value": 3
+                }
+            ]
+        },
+        {
+            "Desc": "",
+            "ID": "Enum_AlarmLEDMode",
+            "Name": "Alarm LED mode",
+            "Values": [
+                {
+                    "Desc": "Индикатор АСД всегда выключен",
+                    "Name": "Выключен",
+                    "Value": 0
+                },
+                {
+                    "Desc": "Индикатор АСД всегда включен",
+                    "Name": "Включен",
+                    "Value": 1
+                },
+                {
+                    "Desc": "Индикатор АСД включен при срабатывании зоны 1",
+                    "Name": "Зона1",
+                    "Value": 2
+                },
+                {
+                    "Desc": "Индикатор АСД включен при срабатывании зоны 2",
+                    "Name": "Зона2",
+                    "Value": 3
+                },
+                {
+                    "Desc": "Индикатор АСД включен при срабатывании зоны 3",
+                    "Name": "Зона3",
+                    "Value": 4
+                },
+                {
+                    "Desc": "Индикатор АСД включен при срабатывании зоны 1 и 2",
+                    "Name": "Зона12",
+                    "Value": 5
+                },
+                {
+                    "Desc": "Индикатор АСД включен при срабатывании зоны 1 и 3",
+                    "Name": "Зона13",
+                    "Value": 6
+                },
+                {
+                    "Desc": "Индикатор АСД включен при срабатывании зоны 2 и 3",
+                    "Name": "Зона23",
+                    "Value": 7
+                },
+                {
+                    "Desc": "Индикатор АСД включен при срабатывании зоны 1 и 2 и 3",
+                    "Name": "Зона123",
+                    "Value": 8
+                }
+            ]
+        },
+        {
+            "Desc": "",
+            "ID": "Enum_ModeWork",
+            "Name": "Device operation mode",
+            "Values": [
+                {
+                    "Desc": "",
+                    "Name": "настройка",
+                    "Value": 0
+                },
+                {
+                    "Desc": "",
+                    "Name": "сканирование",
+                    "Value": 1
+                },
+                {
+                    "Desc": "",
+                    "Name": "самотестирование",
+                    "Value": 2
+                }
+            ]
+        },
+        {
+            "Desc": "low-pass filter cutoff frequency, Hz",
+            "ID": "Enum_LPF",
+            "Name": "low-pass filter",
+            "Values": [
+                {
+                    "Desc": "",
+                    "Name": "off",
+                    "Value": 0
+                },
+                {
+                    "Desc": "",
+                    "Name": "100",
+                    "Value": 1
+                },
+                {
+                    "Desc": "",
+                    "Name": "125",
+                    "Value": 2
+                },
+                {
+                    "Desc": "",
+                    "Name": "160",
+                    "Value": 3
+                },
+                {
+                    "Desc": "",
+                    "Name": "200",
+                    "Value": 4
+                },
+                {
+                    "Desc": "",
+                    "Name": "250",
+                    "Value": 5
+                },
+                {
+                    "Desc": "",
+                    "Name": "315",
+                    "Value": 6
+                },
+                {
+                    "Desc": "",
+                    "Name": "400",
+                    "Value": 7
+                },
+                {
+                    "Desc": "",
+                    "Name": "500",
+                    "Value": 8
+                },
+                {
+                    "Desc": "",
+                    "Name": "630",
+                    "Value": 9
+                },
+                {
+                    "Desc": "",
+                    "Name": "800",
+                    "Value": 10
+                },
+                {
+                    "Desc": "",
+                    "Name": "1000",
+                    "Value": 11
+                }
+            ]
+        },
+        {
+            "Desc": "high-pass filter cutoff frequency, Hz",
+            "ID": "Enum_HPF",
+            "Name": "high-pass filter",
+            "Values": [
+                {
+                    "Desc": "",
+                    "Name": "off",
+                    "Value": 0
+                },
+                {
+                    "Desc": "",
+                    "Name": "5",
+                    "Value": 1
+                },
+                {
+                    "Desc": "",
+                    "Name": "6,3",
+                    "Value": 2
+                },
+                {
+                    "Desc": "",
+                    "Name": "8",
+                    "Value": 3
+                },
+                {
+                    "Desc": "",
+                    "Name": "10",
+                    "Value": 4
+                },
+                {
+                    "Desc": "",
+                    "Name": "12,5",
+                    "Value": 5
+                },
+                {
+                    "Desc": "",
+                    "Name": "16",
+                    "Value": 6
+                },
+                {
+                    "Desc": "",
+                    "Name": "20",
+                    "Value": 7
+                },
+                {
+                    "Desc": "",
+                    "Name": "25",
+                    "Value": 8
+                },
+                {
+                    "Desc": "",
+                    "Name": "31,5",
+                    "Value": 9
+                },
+                {
+                    "Desc": "",
+                    "Name": "40",
+                    "Value": 10
+                },
+                {
+                    "Desc": "",
+                    "Name": "50",
+                    "Value": 11
+                },
+                {
+                    "Desc": "",
+                    "Name": "63",
+                    "Value": 12
+                },
+                {
+                    "Desc": "",
+                    "Name": "80",
+                    "Value": 13
+                },
+                {
+                    "Desc": "",
+                    "Name": "100",
+                    "Value": 14
+                },
+                {
+                    "Desc": "",
+                    "Name": "125",
+                    "Value": 15
+                },
+                {
+                    "Desc": "",
+                    "Name": "160",
+                    "Value": 16
+                },
+                {
+                    "Desc": "",
+                    "Name": "200",
+                    "Value": 17
+                },
+                {
+                    "Desc": "",
+                    "Name": "250",
+                    "Value": 18
+                },
+                {
+                    "Desc": "",
+                    "Name": "315",
+                    "Value": 19
+                },
+                {
+                    "Desc": "",
+                    "Name": "400",
+                    "Value": 20
+                },
+                {
+                    "Desc": "",
+                    "Name": "500",
+                    "Value": 21
+                }
+            ]
+        },
+        {
+            "ID": "OnOffEnum",
+            "Name": "On-off enum",
+            "Num": 0,
+            "Values": [
+                {
+                    "Name": "Выключено",
+                    "Value": 0
+                },
+                {
+                    "Name": "Включено",
+                    "Value": 1
+                }
+            ]
+        },
+        {
+            "ID": "InvNoInvEnum",
+            "Name": "Invert-Noinvert enum",
+            "Num": 0,
+            "Values": [
+                {
+                    "Name": "Не инвертирован",
+                    "Value": 0
+                },
+                {
+                    "Name": "Интерирован",
+                    "Value": 1
+                }
+            ]
+        },
+        {
+            "Desc": "",
+            "ID": "Enum_DSLocation",
+            "Name": "Положение датчика температуры",
+            "Values": [
+                {
+                    "Name": "ADCRef",
+                    "Value": 0
+                },
+                {
+                    "Name": "STU24",
+                    "Value": 1
+                }
+            ]
+        }
+    ],
+    "Flashes": [
+        {
+            "Name": "Flash memory for saving settings",
+            "Num": 0,
+            "Offset": 0,
+            "PageSize": 128,
+            "PagesCount": 256
+        },
+        {
+            "Name": "Bootloader",
+            "Num": 1,
+            "Offset": 134217728,
+            "PageSize": 512,
+            "PagesCount": 512
+        }
+    ],
+    "ParamFloat": [
+        {
+            "Access": "rw",
+            "Desc": "Коэффициент усиления предварительного (ВЧ) усилителя",
+            "FormatStr": "%.1f",
+            "ID": "Gain",
+            "Max": 50,
+            "Min": -10,
+            "Name": "Усиление пред. усилителя",
+            "Num": 0,
+            "Type": "Regular",
+            "Unit": "дБ"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Коэффициент усиления усилителя постоянного тока канала X",
+            "FormatStr": "%.1f",
+            "ID": "GainX",
+            "Max": 60,
+            "Min": 0,
+            "Name": "Усиление канала X",
+            "Num": 1,
+            "Type": "Regular",
+            "Unit": "дБ"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Коэффициент усиления усилителя постоянного тока канала Y",
+            "FormatStr": "%.1f",
+            "ID": "GainY",
+            "Max": 60,
+            "Min": 0,
+            "Name": "Усиление канала Y",
+            "Num": 2,
+            "Type": "Regular",
+            "Unit": "дБ"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Частота сигнала возбуждения ВТП",
+            "FormatStr": "%.0f",
+            "ID": "FreqGen",
+            "Max": 1000000,
+            "Min": 1000,
+            "Name": "Частота возбуждения",
+            "Num": 3,
+            "Type": "Regular",
+            "Unit": "Гц"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Амплитуда выходного сигнала генератора возбуждения ВТП",
+            "FormatStr": "%.3f",
+            "ID": "AmplExcitGen",
+            "Max": 100,
+            "Min": 0,
+            "Name": "Амплитуда возбуждения",
+            "Num": 4,
+            "Type": "Regular",
+            "Unit": "%"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Амплитуде сигнала генератора балансировки приемника сигнала ВТП",
+            "FormatStr": "%.3f",
+            "ID": "AmplBalGen",
+            "Max": 100,
+            "Min": 0,
+            "Name": "Амплитуда балансировки",
+            "Num": 5,
+            "Type": "Regular",
+            "Unit": "%"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Сдвиг фазы сигнала генератора балансировки приемника сигнала ВТП относительно сигнала возбуждения ВТП",
+            "FormatStr": "%.3f",
+            "ID": "PhaseBalGen",
+            "Max": 180,
+            "Min": -180,
+            "Name": "Фаза балансировки",
+            "Num": 6,
+            "Type": "Regular",
+            "Unit": "°"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Сдвиг фазы сигнала генератора квадратурного перемножителя относительно сигнала возбуждения ВТП",
+            "FormatStr": "%.3f",
+            "ID": "PhaseMultGen",
+            "Max": 180,
+            "Min": -180,
+            "Name": "Фаза приема",
+            "Num": 7,
+            "Type": "Regular",
+            "Unit": "°"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Верхний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала X; для «секторная» и «XY» – сравнение для амплитуды; для «уровень» и «AT» – сравнение для амплитуды; для «уровень» и «AX» – сравнение для сигнала X; для «уровень» и «AY» – сравнение для сигнала Y",
+            "FormatStr": "%f",
+            "ID": "AZones1P1",
+            "Max": 1,
+            "Min": -1,
+            "Name": "Зона 1 АСД параметр 1",
+            "Num": 8,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Нижний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала X; для «секторная» и «XY» – сравнение для амплитуды; для «уровень» и «AT» – сравнение для амплитуды; для «уровень» и «AX» – сравнение для сигнала X; для «уровень» и «AY» – сравнение для сигнала Y",
+            "FormatStr": "%f",
+            "ID": "AZones1P2",
+            "Max": 1,
+            "Min": -1,
+            "Name": "Зона 1 АСД параметр 2",
+            "Num": 9,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Верхний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала Y; для «секторная» и «XY» – сравнение для угла (фазы); для «уровень» – не имеет значения",
+            "FormatStr": "%f",
+            "ID": "AZones1P3",
+            "Max": 360,
+            "Min": -1,
+            "Name": "Зона 1 АСД параметр 3",
+            "Num": 10,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Нижний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала Y; для «секторная» и «XY» – сравнение для угла (фазы); для «уровень» – не имеет значения",
+            "FormatStr": "%f",
+            "ID": "AZones1P4",
+            "Max": 360,
+            "Min": -1,
+            "Name": "Зона 1 АСД параметр 4",
+            "Num": 11,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Верхний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала X; для «секторная» и «XY» – сравнение для амплитуды; для «уровень» и «AT» – сравнение для амплитуды; для «уровень» и «AX» – сравнение для сигнала X; для «уровень» и «AY» – сравнение для сигнала Y",
+            "FormatStr": "%f",
+            "ID": "AZones2P1",
+            "Max": 1,
+            "Min": -1,
+            "Name": "Зона 2 АСД параметр 1",
+            "Num": 12,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Нижний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала X; для «секторная» и «XY» – сравнение для амплитуды; для «уровень» и «AT» – сравнение для амплитуды; для «уровень» и «AX» – сравнение для сигнала X; для «уровень» и «AY» – сравнение для сигнала Y",
+            "FormatStr": "%f",
+            "ID": "AZones2P2",
+            "Max": 1,
+            "Min": -1,
+            "Name": "Зона 2 АСД параметр 2",
+            "Num": 13,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Верхний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала Y; для «секторная» и «XY» – сравнение для угла (фазы); для «уровень» – не имеет значения",
+            "FormatStr": "%f",
+            "ID": "AZones2P3",
+            "Max": 360,
+            "Min": -1,
+            "Name": "Зона 2 АСД параметр 3",
+            "Num": 14,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Нижний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала Y; для «секторная» и «XY» – сравнение для угла (фазы); для «уровень» – не имеет значения",
+            "FormatStr": "%f",
+            "ID": "AZones2P4",
+            "Max": 360,
+            "Min": -1,
+            "Name": "Зона 2 АСД параметр 4",
+            "Num": 15,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Верхний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала X; для «секторная» и «XY» – сравнение для амплитуды; для «уровень» и «AT» – сравнение для амплитуды; для «уровень» и «AX» – сравнение для сигнала X; для «уровень» и «AY» – сравнение для сигнала Y",
+            "FormatStr": "%f",
+            "ID": "AZones3P1",
+            "Max": 1,
+            "Min": -1,
+            "Name": "Зона 3 АСД параметр 1",
+            "Num": 16,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Нижний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала X; для «секторная» и «XY» – сравнение для амплитуды; для «уровень» и «AT» – сравнение для амплитуды; для «уровень» и «AX» – сравнение для сигнала X; для «уровень» и «AY» – сравнение для сигнала Y",
+            "FormatStr": "%f",
+            "ID": "AZones3P2",
+            "Max": 1,
+            "Min": -1,
+            "Name": "Зона 3 АСД параметр 2",
+            "Num": 17,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Верхний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала Y; для «секторная» и «XY» – сравнение для угла (фазы); для «уровень» – не имеет значения",
+            "FormatStr": "%f",
+            "ID": "AZones3P3",
+            "Max": 360,
+            "Min": -1,
+            "Name": "Зона 3 АСД параметр 3",
+            "Num": 18,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Нижний предел отсутствия дефекта для зоны сигнализации 1; для «прямоугольная» и «XY» – сравнение для сигнала Y; для «секторная» и «XY» – сравнение для угла (фазы); для «уровень» – не имеет значения",
+            "FormatStr": "%f",
+            "ID": "AZones3P4",
+            "Max": 360,
+            "Min": -1,
+            "Name": "Зона 3 АСД параметр 4",
+            "Num": 19,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Сдвиг фазы сигналов какналов X и Y",
+            "FormatStr": "%.3f",
+            "ID": "FPPhaseCorrMultGen",
+            "Max": 45,
+            "Min": -45,
+            "Name": "Корректировка фазы приема",
+            "Num": 20,
+            "Type": "Regular",
+            "Unit": "°"
+        },
+        {
+            "Access": "rw",
+            "Desc": "ADS131M02 Channel 0 (X) offset calibration in parts of the full scale",
+            "FormatStr": "%f",
+            "ID": "ADSXOCAL",
+            "Max": 1,
+            "Min": -1,
+            "Name": "ADS131M02 Channel 0 (X) offset calibration",
+            "Num": 21,
+            "Type": "Regular",
+            "Unit": "FS"
+        },
+        {
+            "Access": "rw",
+            "Desc": "ADS131M02 Channel 0 (X) gain calibration",
+            "FormatStr": "%f",
+            "ID": "ADSXGCAL",
+            "Max": 1.000001,
+            "Min": 0,
+            "Name": "ADS131M02 Channel 0 (X) gain calibration",
+            "Num": 22,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "ADS131M02 Channel 1 (Y) offset calibration in parts of the full scale",
+            "FormatStr": "%f",
+            "ID": "ADSYOCAL",
+            "Max": 1,
+            "Min": -1,
+            "Name": "ADS131M02 Channel 1 (Y) offset calibration",
+            "Num": 23,
+            "Type": "Regular",
+            "Unit": "FS"
+        },
+        {
+            "Access": "rw",
+            "Desc": "ADS131M02 Channel 1 (Y) gain calibration",
+            "FormatStr": "%f",
+            "ID": "ADSYGCAL",
+            "Max": 1.000001,
+            "Min": 0,
+            "Name": "ADS131M02 Channel 1 (Y) gain calibration",
+            "Num": 24,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%.0f",
+            "ID": "ADCXGain",
+            "Max": 128,
+            "Min": 1,
+            "Name": "Усиление АЦП канал X",
+            "Num": 25,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%.0f",
+            "ID": "ADCYGain",
+            "Max": 128,
+            "Min": 1,
+            "Name": "Усиление АЦП канал Y",
+            "Num": 26,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%.3f",
+            "ID": "FPOffsetGainIndB",
+            "Max": 3,
+            "Min": -3,
+            "Name": "Корректировка смещения усиления",
+            "Num": 27,
+            "Type": "Regular",
+            "Unit": "дБ"
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%.3f",
+            "ID": "FPSlopeCorrGainIndB",
+            "Max": 3,
+            "Min": -3,
+            "Name": "Корректировка наклона усиления",
+            "Num": 28,
+            "Type": "Regular",
+            "Unit": "дБ/(40 дБ)"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%.1f",
+            "ID": "FP_HourMaxTempValue",
+            "Max": 80,
+            "Min": 10,
+            "Name": "Максимальная температура за час",
+            "Num": 29,
+            "Type": "Regular",
+            "Unit": "°C"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%.1f",
+            "ID": "FP_DayMaxTempValue",
+            "Max": 80,
+            "Min": 10,
+            "Name": "Максимальная температура за день",
+            "Num": 30,
+            "Type": "Regular",
+            "Unit": "°C"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%.1f",
+            "ID": "FP_MountMaxTempValue",
+            "Max": 80,
+            "Min": 10,
+            "Name": "Максимальная температура за месяц",
+            "Num": 31,
+            "Type": "Regular",
+            "Unit": "°C"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%.1f",
+            "ID": "FP_YearMaxTempValue",
+            "Max": 80,
+            "Min": 10,
+            "Name": "Максимальная температура за год",
+            "Num": 32,
+            "Type": "Regular",
+            "Unit": "°C"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%.1f",
+            "ID": "FP_AbsoluteMaxTempValue",
+            "Max": 80,
+            "Min": 10,
+            "Name": "Максимальная температура",
+            "Num": 33,
+            "Type": "Regular",
+            "Unit": "°C"
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%.1f",
+            "ID": "FPFreqOffsetMultGen",
+            "Max": 2000,
+            "Min": 0,
+            "Name": "Смещение частоты приемника",
+            "Num": 34,
+            "Type": "Regular",
+            "Unit": "Гц"
+        }
+    ],
+    "ParamInt": [
+        {
+            "Access": "rw",
+            "Desc": "",
+            "Enum": "Enum_ModeWork",
+            "ID": "ModeWork",
+            "Name": "Режим работы ЭБ ВТП",
+            "Num": 0,
+            "Type": "enum",
+            "Unit": ""
+        },
+        {
+            "Access": "ro",
+            "Desc": "наличие ошибок в работе функциональных узлов ЭБ ВТП",
+            "FormatStr": "0x%08x",
+            "ID": "IPStatusEC_EU",
+            "Max": 0,
+            "Min": 0,
+            "Name": "Состояние ЭБ ВТП",
+            "Num": 1,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "ФНЧ каналов X и Y усилителей постоянного тока",
+            "Enum": "Enum_LPF",
+            "ID": "LPFxy",
+            "Name": "ФНЧ каналов X и Y",
+            "Num": 2,
+            "Type": "enum",
+            "Unit": "Гц"
+        },
+        {
+            "Access": "rw",
+            "Desc": "ФВЧ каналов X и Y усилителей постоянного тока",
+            "Enum": "Enum_HPF",
+            "ID": "HPFxy",
+            "Name": "ФВЧ каналов X и Y",
+            "Num": 3,
+            "Type": "enum",
+            "Unit": "Гц"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Режим работы (геометрическая форма) зоны 1 автоматической сигнализации дефектов",
+            "Enum": "Enum_AlarmZonesMode",
+            "ID": "AlarmZonesMode1",
+            "Name": "Режим АСД зоны 1",
+            "Num": 4,
+            "Type": "enum",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Режим работы компаратора зоны сигнализации о дефекте: XY – вариант компаратора для форм зоны «Прямоугольная» и «Секторная»;AT – сравнение амплитуды сигнала для формы «Уровень»;XT – сравнение компоненты X сигнала для формы «Уровень»; YT – сравнение компоненты Y сигнала для формы «Уровень»;",
+            "Enum": "Enum_AlarmCompMode",
+            "ID": "AlarmZonesCompMode1",
+            "Name": "Режим работы компаратора зоны 1 АСД",
+            "Num": 5,
+            "Type": "enum",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Режим работы (геометрическая форма) зоны 2 автоматической сигнализации дефектов",
+            "Enum": "Enum_AlarmZonesMode",
+            "ID": "AlarmZonesMode2",
+            "Name": "Режим работы компаратора зоны 2 АСД",
+            "Num": 6,
+            "Type": "enum",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "",
+            "Enum": "Enum_AlarmCompMode",
+            "ID": "AlarmZonesCompMode2",
+            "Name": "Режим работы компаратора зоны 2 АСД",
+            "Num": 7,
+            "Type": "enum",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Режим работы (геометрическая форма) зоны 3 автоматической сигнализации дефектов",
+            "Enum": "Enum_AlarmZonesMode",
+            "ID": "AlarmZonesMode3",
+            "Name": "Режим работы компаратора зоны 3 АСД",
+            "Num": 8,
+            "Type": "enum",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "",
+            "Enum": "Enum_AlarmCompMode",
+            "ID": "AlarmZonesCompMode3",
+            "Name": "Режим работы компаратора зоны 3 АСД",
+            "Num": 9,
+            "Type": "enum",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Вариант индикации «срабатывания» зон сигнализации дефектов индикатором встроенном в ВТП",
+            "Enum": "Enum_AlarmLEDMode",
+            "ID": "AlarmLEDmode",
+            "Name": "Режим индикатора АСД",
+            "Num": 10,
+            "Type": "enum",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Размер поля данных в пакетах передачи потока данных сканирования",
+            "FormatStr": "%d",
+            "ID": "PackageDataSize",
+            "Max": 128,
+            "Min": 16,
+            "Name": "Размер пакета данных",
+            "Num": 11,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Параметры синхронизации, сведены все поля в один параметр",
+            "FormatStr": "0x%08x",
+            "ID": "IPSyncParam",
+            "Name": "Параметры синхронизации",
+            "Num": 12,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "rw",
+            "Desc": "Значение поля «EncodersParam1» в пакетах потока данных",
+            "Enum": {
+                "ID": "IPSetDataEncodersParam1Enum",
+                "Values": [
+                    {
+                        "Desc": "Текущее значение счетчика энкодера 1",
+                        "Name": "Encoder1CurrData",
+                        "Value": 0
+                    },
+                    {
+                        "Desc": "Текущее значение счетчика импульсов",
+                        "Name": "PulseCurrData",
+                        "Value": 1
+                    }
+                ]
+            },
+            "ID": "IPSetDataEncodersParam1",
+            "Name": "Значение поля «EncodersParam1»",
+            "Num": 13,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Значение поля «EncodersParam2» в пакетах потока данных",
+            "Enum": {
+                "ID": "IPSetDataEncodersParam2Enum",
+                "Values": [
+                    {
+                        "Desc": "Текущее значение счетчика энкодера 1",
+                        "Name": "Encoder2CurrData",
+                        "Value": 0
+                    },
+                    {
+                        "Desc": "Текущее значение счетчика импульсов",
+                        "Name": "PulseCurrData",
+                        "Value": 1
+                    }
+                ]
+            },
+            "ID": "IPSetDataEncodersParam2",
+            "Name": "Значение поля «EncodersParam2»",
+            "Num": 14,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Событие вызывающее увеличение значения счетчика импульсов",
+            "Enum": {
+                "ID": "IPSetPulseSensitivityEnum",
+                "Values": [
+                    {
+                        "Desc": "Резерв, счетчик не работает",
+                        "Name": "Резерв",
+                        "Value": 0
+                    },
+                    {
+                        "Desc": "по фронту импульса",
+                        "Name": "фронт",
+                        "Value": 1
+                    },
+                    {
+                        "Desc": "по срезу импульса",
+                        "Name": "срез",
+                        "Value": 2
+                    },
+                    {
+                        "Desc": "и по фронту и по срезу импульса",
+                        "Name": "оба",
+                        "Value": 3
+                    }
+                ]
+            },
+            "ID": "IPSetPulseSensitivity",
+            "Name": "Чувствительность входа счетчика импульсов",
+            "Num": 15,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Выбор входного сигнала для счетчика импульса",
+            "Enum": {
+                "ID": "IPSetPulseInputEnum",
+                "Values": [
+                    {
+                        "Desc": "Использовать сигнал со входа SY1_DIN1",
+                        "Name": "SY1_DIN1",
+                        "Value": 0
+                    },
+                    {
+                        "Desc": "Использовать сигнал со входа SY1_DIN2",
+                        "Name": "SY1_DIN2",
+                        "Value": 1
+                    },
+                    {
+                        "Desc": "Использовать сигнал со входа SY1_DIN3",
+                        "Name": "SY1_DIN3",
+                        "Value": 2
+                    }
+                ]
+            },
+            "ID": "IPSetPulseInput",
+            "Name": "Вход счетчика импульсов",
+            "Num": 16,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Разрешение работы счетчика импульсов",
+            "Enum": "OnOffEnum",
+            "ID": "IPSetPulseCounterEn",
+            "Name": "Cчетчик импульсов",
+            "Num": 17,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Включение инверсии сигнала сигнала «A» энкодера №1, вход SY1_DIN1",
+            "Enum": "InvNoInvEnum",
+            "ID": "IPSetEncoder1AInv",
+            "Name": "Энкорер 1 сигнала «A»",
+            "Num": 18,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Включение инверсии сигнала сигнала «B» энкодера №1, вход SY1_DIN2",
+            "Enum": "InvNoInvEnum",
+            "ID": "IPSetEncoder1BInv",
+            "Name": "Энкорер 1 сигнала «B»",
+            "Num": 19,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Включение инверсии сигнала сигнала «Z» энкодера №1, вход SY1_DIN3",
+            "Enum": "InvNoInvEnum",
+            "ID": "IPSetEncoder1ZInv",
+            "Name": "Энкорер 1 сигнала «Z»",
+            "Num": 20,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Разрешение сброса (установка в значение 0) счетчика энкодер №1 по сигналу «Z» со входа SY1_DIN3",
+            "Enum": "OnOffEnum",
+            "ID": "IPSetEncoder1ZEn",
+            "Name": "Cброс счетчика энкодер №1",
+            "Num": 21,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Разрешение работы счетчика энкодера №1",
+            "Enum": "OnOffEnum",
+            "ID": "IPSetEncoder1En",
+            "Name": "Энкодер №1",
+            "Num": 22,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Масштабируюший коэффициент для энкодера №1, колличество микрометров приходящихся на один импульс энкодера",
+            "FormatStr": "%d",
+            "ID": "IPEncoder1ScalingFactor",
+            "Name": "Масштаб для энкодера №1",
+            "Num": 23,
+            "Type": "Regular",
+            "Unit": "нм/импульс"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Масштабируюший коэффициент счетчика импульсов, колличество микрометров приходящихся на один входной импульс",
+            "FormatStr": "%d",
+            "ID": "IPPulseScalingFactor",
+            "Name": "Масштаб для счетчика импульсов",
+            "Num": 24,
+            "Type": "Regular",
+            "Unit": "нм/импульс"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Текущее значение (миллиметры, целая часть) счетчика энкодера №1 модуля синхронизации",
+            "FormatStr": "%d",
+            "ID": "Encoder1CurrDataH",
+            "Name": "Энкодер №1 миллиметры",
+            "Num": 25,
+            "Type": "Regular",
+            "Unit": "мм"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Текущее значение (миллиметры, дробная часть) счетчика энкодера №1 модуля синхронизации",
+            "FormatStr": "%d",
+            "ID": "Encoder1CurrDataL",
+            "Name": "Энкодер №1 доли миллиметра",
+            "Num": 26,
+            "Type": "Regular",
+            "Unit": "нм"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Текущее значение (миллиметры, целая часть) счетчика импульсов модуля синхронизации",
+            "FormatStr": "%d",
+            "ID": "PulseCurrDataH",
+            "Name": "Счетчик импульсов, миллиметры",
+            "Num": 27,
+            "Type": "Regular",
+            "Unit": "мм"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Текущее значение (миллиметры, дробная часть) счетчика импульсов модуля синхронизации",
+            "FormatStr": "%d",
+            "ID": "PulseCurrDataL",
+            "Name": "Счетчик импульсов, доли миллиметра",
+            "Num": 28,
+            "Type": "Regular",
+            "Unit": "нм"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Использовать данные полученные при заводской калибровке",
+            "ID": "IPUsesFactoryCalib",
+            "Name": "Использовать заводскую калибровку",
+            "Num": 29,
+            "Type": "bool"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Сохранение параметров в энергонезависимую память",
+            "ID": "IPSaveParem",
+            "Name": "Сохранение параметров",
+            "Num": 30,
+            "Type": "bool"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Присваивается электронному блоку если не был получен автоматически от DCHP сервера",
+            "ID": "IPDefaultAddress",
+            "Name": "IP адрес электронного блока по умолчанию",
+            "Num": 31,
+            "Type": "IPv4Addr",
+            "Unit": "IPv4"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Присваивается электронному блоку если не был получен автоматически от DCHP сервера",
+            "ID": "IPDefaultNetMask",
+            "Name": "Маска подсети",
+            "Num": 32,
+            "Type": "IPv4Mask",
+            "Unit": "IPv4"
+        },
+        {
+            "Access": "rw",
+            "Desc": "Присваивается электронному блоку если не был получен автоматически от DCHP сервера",
+            "ID": "IPDefaultGW",
+            "Name": "Основной шлюз ",
+            "Num": 33,
+            "Type": "IPv4Addr",
+            "Unit": "IPv4"
+        },
+        {
+            "Access": "ro",
+            "Desc": "",
+            "FormatStr": "%T",
+            "ID": "IPPowerPriBuildTime",
+            "Name": "МК мониторинга ИП (первичный) дата сборки ПО",
+            "Num": 34,
+            "Type": "DateTime",
+            "Unit": "UNIX Time"
+        },
+        {
+            "Access": "ro",
+            "Desc": "",
+            "FormatStr": "%T",
+            "ID": "IPPowerSecBuildTime",
+            "Name": "МК мониторинга ИП (вторичный) дата сборки ПО",
+            "Num": 35,
+            "Type": "DateTime",
+            "Unit": "UNIX Time"
+        },
+        {
+            "Access": "ro",
+            "Desc": "",
+            "FormatStr": "0x%08x",
+            "ID": "LCXO2TypeVer",
+            "Name": "Тип и версия ПО ПЛИС",
+            "Num": 36,
+            "Type": "Regular",
+            "Unit": ""
+        },
+        {
+            "Access": "ro",
+            "Desc": "",
+            "FormatStr": "%T",
+            "ID": "LCXO2BuildTime",
+            "Name": "ПЛИС дата сборки ПО",
+            "Num": 37,
+            "Type": "DateTime",
+            "Unit": "UNIX Time"
+        },
+        {
+            "Access": "ro",
+            "Desc": "Если галочка стоит возможно изменить параметры заводской калибровки",
+            "ID": "IPFactoryCalibrLock",
+            "Name": "Разрешена заводская калибровка",
+            "Num": 38,
+            "Type": "bool"
+        },
+        {
+            "Access": "rw",
+            "Desc": "",
+            "FormatStr": "0x%08X",
+            "ID": "IPFactoryCalibrKey",
+            "Name": "Ключ заводской калибровки",
+            "Num": 39,
+            "Type": "Regular"
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%d",
+            "ID": "IPCurrPosOutKu",
+            "Max": 15,
+            "Min": 0,
+            "Name": "Текущая позиция усилителя возбуждения",
+            "Num": 40,
+            "Type": "Regular"
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%d",
+            "ID": "IPMultGenAmpl",
+            "Max": 65535,
+            "Min": 0,
+            "Name": "Текущаее значение множителя для амплитуды генератора возбуждения",
+            "Num": 41,
+            "Type": "Regular"
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%d",
+            "ID": "IPCurrPosBalKu",
+            "Max": 15,
+            "Min": 0,
+            "Name": "Текущая позиция усилителя балансировки",
+            "Num": 42,
+            "Type": "Regular"
+        },
+        {
+            "Access": "rw",
+            "FormatStr": "%d",
+            "ID": "IPMultBalAmpl",
+            "Max": 65535,
+            "Min": 0,
+            "Name": "Текущаее значение множителя для амплитуды генератора балансировки",
+            "Num": 43,
+            "Type": "Regular"
+        },
+        {
+            "Access": "rw",
+            "Enum": "Enum_DSLocation",
+            "ID": "IP_DS0_Location",
+            "Name": "Положение датчика температуры №1",
+            "Num": 44,
+            "Type": "enum"
+        },
+        {
+            "Access": "rw",
+            "Enum": "Enum_DSLocation",
+            "ID": "IP_DS1_Location",
+            "Name": "Положение датчика температуры №2",
+            "Num": 45,
+            "Type": "enum"
+        },
+        {
+            "Access": "ro",
+            "Desc": "Кажды бил этого параметра соотвествует внутреннему стабилизатору напряжения, не нулевое значение бита информируен о отклонении выходного напряжения он номинального значения",
+            "FormatStr": "0x%08x",
+            "ID": "IPStatusInterVolt",
+            "Max": 0,
+            "Min": 0,
+            "Name": "Ошибки внутренних стабилизаторов питания",
+            "Num": 46,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "Desc": "Кажды бил этого параметра соотвествует внутреннему стабилизатору напряжения, не нулевое значение бита информируен о отклонении выходного напряжения он номинального значения",
+            "FormatStr": "0x%08x",
+            "ID": "IPStatusPMInterVolt",
+            "Max": 0,
+            "Min": 0,
+            "Name": "Ошибки внутренних стабилизаторов питания ИП",
+            "Num": 47,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "Desc": "Кажды бил этого параметра соотвествует обслуживанию внутреннего файла, не нулевое значение информирует о шубке в работе с соответсвующим файлом",
+            "FormatStr": "0x%08x",
+            "ID": "IPStatusFileSystem",
+            "Max": 0,
+            "Min": 0,
+            "Name": "Ошибки работы файловой системы",
+            "Num": 48,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%t",
+            "ID": "IP_TotalOperatingTime",
+            "Max": 4294967296,
+            "Min": 0,
+            "Name": "Время наработки",
+            "Num": 49,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%d",
+            "ID": "IP_NumberOfBootloaderLaunches",
+            "Max": 4294967296,
+            "Min": 0,
+            "Name": "Количество запусков загрузчика",
+            "Num": 50,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%d",
+            "ID": "IP_NumberOfApplicationLaunches",
+            "Max": 4294967296,
+            "Min": 0,
+            "Name": "Количество запусков приложения",
+            "Num": 51,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%d",
+            "ID": "IP_NumberErrorWriteDeviceUsStat",
+            "Max": 0,
+            "Min": 0,
+            "Name": "Количество ошибок записи файла статистики",
+            "Num": 52,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "Desc": "Момент времени фиксирующий максимальную температуру во времени наработки",
+            "FormatStr": "%t",
+            "ID": "IP_AbsoluteMaxTempTimestamp",
+            "Max": 4294967296,
+            "Min": 0,
+            "Name": "Момент времени максимальной температуры",
+            "Num": 53,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%t",
+            "ID": "IP_OperatingTimeAtHighTemp",
+            "Max": 4294967296,
+            "Min": 0,
+            "Name": "Время работы при высокой температуре",
+            "Num": 54,
+            "Type": "Regular"
+        },
+        {
+            "Access": "ro",
+            "FormatStr": "%d",
+            "ID": "IP_NumberErrorWriteTempStat",
+            "Max": 0,
+            "Min": 0,
+            "Name": "Количество ошибок записи файла статистики темературы",
+            "Num": 55,
+            "Type": "Regular"
+        }
+    ],
+    "Reset": true,
+    "Table": [
+        {
+            "Access": "ro",
+            "ColumnCount": 2,
+            "Columns": [
+                {
+                    "Column": 0,
+                    "Name": "Канал X"
+                },
+                {
+                    "Column": 1,
+                    "Name": "Канал Y"
+                }
+            ],
+            "DataType": "fract32",
+            "FormatStr": "%f",
+            "ID": "RAWADCData",
+            "Name": "Данные АЦП для уаналов X и Y",
+            "NeedParamPrepare": true,
+            "Num": 0,
+            "RowCount": 1,
+            "Type": "Regular"
+        },
+        {
+            "Access": "rw",
+            "ColumnCount": 24,
+            "Columns": [
+                {
+                    "Column": 0,
+                    "Name": "Аттенюатор балансировки 1 кГц"
+                },
+                {
+                    "Column": 1,
+                    "Name": "Аттенюатор балансировки 10 кГц"
+                },
+                {
+                    "Column": 2,
+                    "Name": "Аттенюатор балансировки 100 кГц"
+                },
+                {
+                    "Column": 3,
+                    "Name": "Аттенюатор балансировки 200 кГц"
+                },
+                {
+                    "Column": 4,
+                    "Name": "Аттенюатор балансировки 300 кГц"
+                },
+                {
+                    "Column": 5,
+                    "Name": "Аттенюатор балансировки 400 кГц"
+                },
+                {
+                    "Column": 6,
+                    "Name": "Аттенюатор балансировки 500 кГц"
+                },
+                {
+                    "Column": 7,
+                    "Name": "Аттенюатор балансировки 600 кГц"
+                },
+                {
+                    "Column": 8,
+                    "Name": "Аттенюатор балансировки 700 кГц"
+                },
+                {
+                    "Column": 9,
+                    "Name": "Аттенюатор балансировки 800 кГц"
+                },
+                {
+                    "Column": 10,
+                    "Name": "Аттенюатор балансировки 900 кГц"
+                },
+                {
+                    "Column": 11,
+                    "Name": "Аттенюатор балансировки 1000 кГц"
+                },
+                {
+                    "Column": 12,
+                    "Name": "Аттенюатор возбуждения 1 кГц"
+                },
+                {
+                    "Column": 13,
+                    "Name": "Аттенюатор возбуждения 10 кГц"
+                },
+                {
+                    "Column": 14,
+                    "Name": "Аттенюатор возбуждения 100 кГц"
+                },
+                {
+                    "Column": 15,
+                    "Name": "Аттенюатор возбуждения 200 кГц"
+                },
+                {
+                    "Column": 16,
+                    "Name": "Аттенюатор возбуждения 300 кГц"
+                },
+                {
+                    "Column": 17,
+                    "Name": "Аттенюатор возбуждения 400 кГц"
+                },
+                {
+                    "Column": 18,
+                    "Name": "Аттенюатор возбуждения 500 кГц"
+                },
+                {
+                    "Column": 19,
+                    "Name": "Аттенюатор возбуждения 600 кГц"
+                },
+                {
+                    "Column": 20,
+                    "Name": "Аттенюатор возбуждения 700 кГц"
+                },
+                {
+                    "Column": 21,
+                    "Name": "Аттенюатор возбуждения 800 кГц"
+                },
+                {
+                    "Column": 22,
+                    "Name": "Аттенюатор возбуждения 900 кГц"
+                },
+                {
+                    "Column": 23,
+                    "Name": "Аттенюатор возбуждения 1000 кГц"
+                }
+            ],
+            "DataType": "float",
+            "FormatStr": "%.2f",
+            "ID": "TabFactoryCalibAtt",
+            "Name": "Заводская калибровка аттенюаторов",
+            "NeedParamPrepare": false,
+            "Num": 1,
+            "RowCount": 16,
+            "Rows": [
+                {
+                    "Name": "0",
+                    "Row": 0
+                },
+                {
+                    "Name": "1",
+                    "Row": 1
+                },
+                {
+                    "Name": "2",
+                    "Row": 2
+                },
+                {
+                    "Name": "3",
+                    "Row": 3
+                },
+                {
+                    "Name": "4",
+                    "Row": 4
+                },
+                {
+                    "Name": "5",
+                    "Row": 5
+                },
+                {
+                    "Name": "6",
+                    "Row": 6
+                },
+                {
+                    "Name": "7",
+                    "Row": 7
+                },
+                {
+                    "Name": "8",
+                    "Row": 8
+                },
+                {
+                    "Name": "9",
+                    "Row": 9
+                },
+                {
+                    "Name": "10",
+                    "Row": 10
+                },
+                {
+                    "Name": "11",
+                    "Row": 11
+                },
+                {
+                    "Name": "12",
+                    "Row": 12
+                },
+                {
+                    "Name": "13",
+                    "Row": 13
+                },
+                {
+                    "Name": "14",
+                    "Row": 14
+                },
+                {
+                    "Name": "15",
+                    "Row": 15
+                }
+            ],
+            "Type": "Regular"
+        },
+        {
+            "Access": "rw",
+            "ColumnCount": 3,
+            "Columns": [
+                {
+                    "Column": 0,
+                    "FormatStr": "%.2f",
+                    "Name": "коррекция фазы, °"
+                },
+                {
+                    "Column": 1,
+                    "FormatStr": "%.4f",
+                    "Name": "Смещение X (Ku = 128), ПШ"
+                },
+                {
+                    "Column": 2,
+                    "FormatStr": "%.4f",
+                    "Name": "Смещение Y (Ku = 128), ПШ"
+                }
+            ],
+            "DataType": "float",
+            "ID": "TabFactoryCalibPh",
+            "Name": "Заводская калибровка фазы перемножителя",
+            "NeedParamPrepare": false,
+            "Num": 2,
+            "RowCount": 12,
+            "Rows": [
+                {
+                    "Name": "1 кГц",
+                    "Row": 0
+                },
+                {
+                    "Name": "10 кГц",
+                    "Row": 1
+                },
+                {
+                    "Name": "100 кГц",
+                    "Row": 2
+                },
+                {
+                    "Name": "200 кГц",
+                    "Row": 3
+                },
+                {
+                    "Name": "300 кГц",
+                    "Row": 4
+                },
+                {
+                    "Name": "400 кГц",
+                    "Row": 5
+                },
+                {
+                    "Name": "500 кГц",
+                    "Row": 6
+                },
+                {
+                    "Name": "600 кГц",
+                    "Row": 7
+                },
+                {
+                    "Name": "700 кГц",
+                    "Row": 8
+                },
+                {
+                    "Name": "800 кГц",
+                    "Row": 9
+                },
+                {
+                    "Name": "900 кГц",
+                    "Row": 10
+                },
+                {
+                    "Name": "1 МГц",
+                    "Row": 11
+                }
+            ],
+            "Type": "Regular"
+        }
+    ],
+    "Telemetry": [
+        {
+            "Desc": "",
+            "FormatStr": "%t",
+            "ID": "CoreUptime",
+            "Name": "Core uptime",
+            "Num": 0,
+            "Unit": "s"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%t",
+            "ID": "LCUptime",
+            "Name": "FPGA uptime",
+            "Num": 1,
+            "Unit": "s"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.0f",
+            "ID": "TelStatusEC_EU",
+            "Max": 0.01,
+            "Min": -0.01,
+            "Name": "TelStatusEC_EU",
+            "Num": 2,
+            "Unit": ""
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.6f",
+            "ID": "TelReceivAmpl",
+            "Name": "Амплитуда сигнала на входе приемника",
+            "Num": 3,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelReceivPh",
+            "Name": "Фаза сигнала на входе приемника",
+            "Num": 4,
+            "Unit": "°"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.6f",
+            "ID": "TelReceivX",
+            "Name": "X компонента сигнала на входе приемника",
+            "Num": 5,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.6f",
+            "ID": "TelReceivY",
+            "Name": "Y компонента сигнала на входе приемника",
+            "Num": 6,
+            "Unit": "В"
+        },
+        {
+            "Desc": "Процент семплов с перегрузкой в канале приема X",
+            "FormatStr": "%.2f",
+            "ID": "TelOverloadX",
+            "Max": 0.0001,
+            "Min": 0,
+            "Name": "Перегрузка канала X",
+            "Num": 7
+        },
+        {
+            "Desc": "Процент семплов с перегрузкой в канале приема Y",
+            "FormatStr": "%.2f",
+            "ID": "TelOverloadY",
+            "Max": 0.0001,
+            "Min": 0,
+            "Name": "Перегрузка канала Y",
+            "Num": 8
+        },
+        {
+            "Desc": "Текущее значение (миллиметры, целая часть) счетчика энкодера №1 модуля синхронизации",
+            "FormatStr": "%.0f",
+            "ID": "TelEncoder1CurrData_mm",
+            "Name": "Энкодер №1, миллиметры",
+            "Num": 9,
+            "Unit": "мм"
+        },
+        {
+            "Desc": "Текущее значение (миллиметры, дробная часть) счетчика энкодера №1 модуля синхронизации",
+            "FormatStr": "%.0f",
+            "ID": "TelEncoder1CurrData_nm",
+            "Name": "Энкодер №1, доли миллиметра",
+            "Num": 10,
+            "Unit": "нм"
+        },
+        {
+            "Desc": "Текущее значение (миллиметры, целая часть) счетчика импульсов модуля синхронизации",
+            "FormatStr": "%.0f",
+            "ID": "TelPulseCurrData_mm",
+            "Name": "Счетчик импульсов, миллиметры",
+            "Num": 11,
+            "Unit": "мм"
+        },
+        {
+            "Desc": "Текущее значение (миллиметры, дробная часть) счетчика импульсов модуля синхронизации",
+            "FormatStr": "%.0f",
+            "ID": "TelPulseCurrData_nm",
+            "Name": "Счетчик импульсов, доли миллиметра",
+            "Num": 12,
+            "Unit": "нм"
+        },
+        {
+            "Desc": "Значение (миллиметры, целая часть) поля «EncoderParam1» пакетов потока передачи данных",
+            "FormatStr": "%.0f",
+            "ID": "TelEncoderParam1_mm",
+            "Name": "EncoderParam1 mm",
+            "Num": 13,
+            "Unit": "мкм"
+        },
+        {
+            "Desc": "Значение (миллиметры, дробная часть) поля «EncoderParam1» пакетов потока передачи данных",
+            "FormatStr": "%.0f",
+            "ID": "TelEncoderParam1_nm",
+            "Name": "EncoderParam1 nm",
+            "Num": 14,
+            "Unit": "мкм"
+        },
+        {
+            "Desc": "Значение (миллиметры, целая часть) поля «EncoderParam2» пакетов потока передачи данных",
+            "FormatStr": "%.0f",
+            "ID": "TelEncoderParam2_mm",
+            "Name": "EncoderParam2 mm",
+            "Num": 15,
+            "Unit": "мкм"
+        },
+        {
+            "Desc": "Значение (миллиметры, дробная часть) поля «EncoderParam2» пакетов потока передачи данных",
+            "FormatStr": "%.0f",
+            "ID": "TelEncoderParam2_nm",
+            "Name": "EncoderParam2 nm",
+            "Num": 16,
+            "Unit": "мкм"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelADC12VdMin",
+            "Max": 1.28,
+            "Min": 1.16,
+            "Name": "TelADC12VdMin",
+            "Num": 17,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelADC12VdAvg",
+            "Max": 1.28,
+            "Min": 1.18,
+            "Name": "TelADC12VdAvg",
+            "Num": 18,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelADC12VdMax",
+            "Max": 1.3,
+            "Min": 1.18,
+            "Name": "TelADC12VdMax",
+            "Num": 19,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC33VdMin",
+            "Max": 3.45,
+            "Min": 3.2,
+            "Name": "TelADC33VdMin",
+            "Num": 20,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC33VdAvg",
+            "Max": 3.45,
+            "Min": 3.2,
+            "Name": "TelADC33VdAvg",
+            "Num": 21,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC33VdMax",
+            "Max": 3.45,
+            "Min": 3.2,
+            "Name": "TelADC33VdMax",
+            "Num": 22,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC33VaMin",
+            "Max": 3.45,
+            "Min": 3.2,
+            "Name": "TelADC33VaMin",
+            "Num": 23,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC33VaAvg",
+            "Max": 3.45,
+            "Min": 3.2,
+            "Name": "TelADC33VaAvg",
+            "Num": 24,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC33VaMax",
+            "Max": 3.45,
+            "Min": 3.2,
+            "Name": "TelADC33VaMax",
+            "Num": 25,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VaMin",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VaMin",
+            "Num": 26,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VaAvg",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VaAvg",
+            "Num": 27,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VaMax",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VaMax",
+            "Num": 28,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADCn5VaMin",
+            "Max": -4.8,
+            "Min": -5.25,
+            "Name": "TelADCn5VaMin",
+            "Num": 29,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADCn5VaAvg",
+            "Max": -4.8,
+            "Min": -5.25,
+            "Name": "TelADCn5VaAvg",
+            "Num": 30,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADCn5VaMax",
+            "Max": -4.8,
+            "Min": -5.25,
+            "Name": "TelADCn5VaMax",
+            "Num": 31,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADC15VaMin",
+            "Max": 15.5,
+            "Min": 14.5,
+            "Name": "TelADC15VaMin",
+            "Num": 32,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADC15VaAvg",
+            "Max": 15.5,
+            "Min": 14.5,
+            "Name": "TelADC15VaAvg",
+            "Num": 33,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADC15VaMax",
+            "Max": 15.5,
+            "Min": 14.5,
+            "Name": "TelADC15VaMax",
+            "Num": 34,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADCn15VaMin",
+            "Max": -14.5,
+            "Min": -15.5,
+            "Name": "TelADCn15VaMin",
+            "Num": 35,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADCn15VaAvg",
+            "Max": -14.5,
+            "Min": -15.5,
+            "Name": "TelADCn15VaAvg",
+            "Num": 36,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADCn15VaMax",
+            "Max": -14.5,
+            "Min": -15.5,
+            "Name": "TelADCn15VaMax",
+            "Num": 37,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VconMin",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VconMin",
+            "Num": 38,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VconAvg",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VconAvg",
+            "Num": 39,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VconMax",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VconMax",
+            "Num": 40,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VSMin",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VSMin",
+            "Num": 41,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VSAvg",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VSAvg",
+            "Num": 42,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.2f",
+            "ID": "TelADC5VSMax",
+            "Max": 5.25,
+            "Min": 4.8,
+            "Name": "TelADC5VSMax",
+            "Num": 43,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADC24VMin",
+            "Max": 25,
+            "Min": 23,
+            "Name": "TelADC24VMin",
+            "Num": 44,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADC24VAvg",
+            "Max": 25,
+            "Min": 23,
+            "Name": "TelADC24VAvg",
+            "Num": 45,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADC24VMax",
+            "Max": 25,
+            "Min": 23,
+            "Name": "TelADC24VMax",
+            "Num": 46,
+            "Unit": "В"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelADCTemp",
+            "Max": 80,
+            "Min": 10,
+            "Name": "TelADCTemp",
+            "Num": 47,
+            "Unit": "°C"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelTempADCRef",
+            "Max": 80,
+            "Min": 10,
+            "Name": "TelTempADCRef",
+            "Num": 48,
+            "Unit": "°C"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelTempSTU24",
+            "Max": 80,
+            "Min": 10,
+            "Name": "TelTempSTU24",
+            "Num": 49,
+            "Unit": "°C"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%t",
+            "ID": "TelPMD2Up_time",
+            "Name": "PM D2 Uptime",
+            "Num": 50,
+            "Unit": "s"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2CInMin",
+            "Max": 3.15,
+            "Min": 0.1,
+            "Name": "TelPMD2CInMin",
+            "Num": 51,
+            "Unit": "A"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2CInAVG",
+            "Max": 3.15,
+            "Min": 0.1,
+            "Name": "TelPMD2CInAVG",
+            "Num": 52,
+            "Unit": "A"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2CInMax",
+            "Max": 3.15,
+            "Min": 0.1,
+            "Name": "TelPMD2CInMax",
+            "Num": 53,
+            "Unit": "A"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2VInMin",
+            "Max": 14,
+            "Min": 10.5,
+            "Name": "TelPMD2VInMin",
+            "Num": 54,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2VInAVG",
+            "Max": 14,
+            "Min": 10.5,
+            "Name": "TelPMD2VInAVG",
+            "Num": 55,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2VInMax",
+            "Max": 14,
+            "Min": 10.5,
+            "Name": "TelPMD2VInMax",
+            "Num": 56,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2PInMin",
+            "Max": 30,
+            "Min": 1,
+            "Name": "TelPMD2PInMin",
+            "Num": 57,
+            "Unit": "W"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2PInAVG",
+            "Max": 30,
+            "Min": 1,
+            "Name": "TelPMD2PInAVG",
+            "Num": 58,
+            "Unit": "W"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD2PInMax",
+            "Max": 30,
+            "Min": 1,
+            "Name": "TelPMD2PInMax",
+            "Num": 59,
+            "Unit": "W"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.0f",
+            "ID": "TelPMD2ConvFreq",
+            "Max": 135000,
+            "Min": 120000,
+            "Name": "TelPMD2ConvFreq",
+            "Num": 60,
+            "Unit": "Hz"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelPMD2TempSensor",
+            "Max": 80,
+            "Min": 10,
+            "Name": "TelPMD2TempSensor",
+            "Num": 61,
+            "Unit": "°C"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelPMD2TempDS18B20",
+            "Max": 80,
+            "Min": 10,
+            "Name": "TelPMD2TempDS18B20",
+            "Num": 62,
+            "Unit": "°C"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%t",
+            "ID": "TelPMD6Up_time",
+            "Name": "PM D6 Uptime",
+            "Num": 63,
+            "Unit": "s"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp27VMin",
+            "Max": 29,
+            "Min": 26,
+            "Name": "TelPMD6Vp27VMin",
+            "Num": 64,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp27VAVG",
+            "Max": 29,
+            "Min": 26,
+            "Name": "TelPMD6Vp27VAVG",
+            "Num": 65,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp27VMax",
+            "Max": 29,
+            "Min": 26,
+            "Name": "TelPMD6Vp27VMax",
+            "Num": 66,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp8VMin",
+            "Max": 9.5,
+            "Min": 7,
+            "Name": "TelPMD6Vp8VMin",
+            "Num": 67,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp8VAVG",
+            "Max": 9.5,
+            "Min": 7,
+            "Name": "TelPMD6Vp8VAVG",
+            "Num": 68,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp8VMax",
+            "Max": 9.5,
+            "Min": 7,
+            "Name": "TelPMD6Vp8VMax",
+            "Num": 69,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp5VMin",
+            "Max": 5.3,
+            "Min": 4.8,
+            "Name": "TelPMD6Vp5VMin",
+            "Num": 70,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp5VAVG",
+            "Max": 5.3,
+            "Min": 4.8,
+            "Name": "TelPMD6Vp5VAVG",
+            "Num": 71,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp5VMax",
+            "Max": 5.3,
+            "Min": 4.8,
+            "Name": "TelPMD6Vp5VMax",
+            "Num": 72,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp20VMin",
+            "Max": 19,
+            "Min": 17,
+            "Name": "TelPMD6Vp20VMin",
+            "Num": 73,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp20VAVG",
+            "Max": 19,
+            "Min": 17,
+            "Name": "TelPMD6Vp20VAVG",
+            "Num": 74,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vp20VMax",
+            "Max": 19,
+            "Min": 17,
+            "Name": "TelPMD6Vp20VMax",
+            "Num": 75,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vn8VMin",
+            "Max": -7,
+            "Min": -9.5,
+            "Name": "TelPMD6Vn8VMin",
+            "Num": 76,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vn8VAVG",
+            "Max": -7,
+            "Min": -9.5,
+            "Name": "TelPMD6Vn8VAVG",
+            "Num": 77,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vn8VMax",
+            "Max": -7,
+            "Min": -9.5,
+            "Name": "TelPMD6Vn8VMax",
+            "Num": 78,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vn20VMin",
+            "Max": -17,
+            "Min": -19,
+            "Name": "TelPMD6Vn20VMin",
+            "Num": 79,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vn20VAVG",
+            "Max": -17,
+            "Min": -19,
+            "Name": "TelPMD6Vn20VAVG",
+            "Num": 80,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.3f",
+            "ID": "TelPMD6Vn20VMax",
+            "Max": -17,
+            "Min": -19,
+            "Name": "TelPMD6Vn20VMax",
+            "Num": 81,
+            "Unit": "V"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelPMD6TempSensor",
+            "Max": 80,
+            "Min": 10,
+            "Name": "TelPMD6TempSensor",
+            "Num": 82,
+            "Unit": "°C"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.1f",
+            "ID": "TelPMD6TempDS18B20",
+            "Max": 80,
+            "Min": 10,
+            "Name": "TelPMD6TempDS18B20",
+            "Num": 83,
+            "Unit": "°C"
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.0f",
+            "ID": "TelPMPassPacketCount",
+            "Name": "TelPMPassPacketCount",
+            "Num": 84,
+            "Unit": ""
+        },
+        {
+            "Desc": "",
+            "FormatStr": "%.0f",
+            "ID": "TelPMErrorPacketCount",
+            "Name": "TelPMErrorPacketCount",
+            "Num": 85,
+            "Unit": ""
+        },
+        {
+            "Desc": "Кажды бил этого параметра соотвествует внутреннему стабилизатору напряжения, не нулевое значение бита информируен о отклонении выходного напряжения он номинального значения",
+            "FormatStr": "%.0f",
+            "ID": "TelStatusInterVolt",
+            "Max": 0,
+            "Min": 0,
+            "Name": "Ошибки внутренних стабилизаторов питания",
+            "Num": 86,
+            "Unit": ""
+        },
+        {
+            "Desc": "Кажды бил этого параметра соотвествует обслуживанию внутреннего файла, не нулевое значение информирует о шубке в работе с соответсвующим файлом",
+            "FormatStr": "%.0f",
+            "ID": "TelStatusFileSystem",
+            "Max": 0,
+            "Min": 0,
+            "Name": "Ошибки работы файловой системы",
+            "Num": 87,
+            "Unit": ""
+        }
+    ],
+    "UART": [
+        {
+            "Name": "115200",
+            "Value": 4
+        }
+    ],
+    "UUID": true
+}

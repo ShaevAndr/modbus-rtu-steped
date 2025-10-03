@@ -3,6 +3,7 @@ QT += core gui widgets serialport
 CONFIG += c++17
 
 SOURCES += \
+    ConnectDeviceButton.cpp \
     main.cpp \
     mainwindow.cpp \
     searchdevicewidget.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
     devicescandialog.cpp\
 
 HEADERS += \
+    ConnectDeviceButton.h \
     IProtocol.h \
     command.h \
     mainwindow.h \

@@ -34,7 +34,7 @@ public:
     virtual QVector<Command> setParametersF(quint8 deviceAddr, quint16 index, QVector<float> values) = 0;
     virtual QVector<Command> getParametersI(quint8 deviceAddr, quint16 index, quint16 count) = 0;
     virtual QVector<Command> getParametersF(quint8 deviceAddr, quint16 index, quint16 count) = 0;
-    virtual QVector<Command> getDeviceInfo(quint8 deviceAddr);
+    virtual QVector<Command> getDeviceInfo(quint8 deviceAddr) = 0;
 };
 
 #endif // IPROTOCOL_H
